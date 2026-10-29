@@ -1,0 +1,29 @@
+# Ambiente virtual e caches do Python
+.venv
+venv
+env
+__pycache__
+*.py[cod]
+
+# Banco de dados local (no container ele fica no volume)
+db.sqlite
+db.sqlite-journal
+db.sqlite3
+db.sqlite3-journal
+
+# Controle de versão e configurações locais
+.git
+.gitignore
+.claude
+.env
+
+# Relatórios de testes e cobertura
+.coverage
+.coverage.*
+htmlcov
+.pytest_cache
+
+# Arquivos do próprio Docker
+Dockerfile
+.dockerignore
+docker-compose.yml

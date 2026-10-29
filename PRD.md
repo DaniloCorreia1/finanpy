@@ -1273,17 +1273,17 @@ Critérios de aceite:
 
 ### Sprint 10 — Docker e entrega
 
-- [ ] **10.1 Configuração por variáveis de ambiente**
-  - [ ] 10.1.1 Ler `SECRET_KEY`, `DEBUG` e `ALLOWED_HOSTS` de variáveis de ambiente com `os.environ.get()` e valores padrão de desenvolvimento.
-  - [ ] 10.1.2 Criar `.env.example` documentando as variáveis.
+- [X] **10.1 Configuração por variáveis de ambiente**
+  - [X] 10.1.1 Ler `SECRET_KEY`, `DEBUG` e `ALLOWED_HOSTS` de variáveis de ambiente com `os.environ.get()` e valores padrão de desenvolvimento.
+  - [X] 10.1.2 Criar `.env.example` documentando as variáveis.
 
 - [ ] **10.2 Docker**
-  - [ ] 10.2.1 Criar `Dockerfile` baseado em `python:3.12-slim`, instalando `requirements.txt`.
-  - [ ] 10.2.2 Criar `.dockerignore` (`.venv`, `__pycache__`, `db.sqlite`, `.git`).
-  - [ ] 10.2.3 Criar `docker-compose.yml` com o serviço `web`, porta `8000` e volume para persistir o `db.sqlite`.
-  - [ ] 10.2.4 Executar `migrate` na inicialização do container.
+  - [X] 10.2.1 Criar `Dockerfile` baseado em `python:3.12-slim`, instalando `requirements.txt`.
+  - [X] 10.2.2 Criar `.dockerignore` (`.venv`, `__pycache__`, `db.sqlite`, `.git`).
+  - [X] 10.2.3 Criar `docker-compose.yml` com o serviço `web`, porta `8000` e volume para persistir o `db.sqlite`.
+  - [X] 10.2.4 Executar `migrate` na inicialização do container.
   - [ ] 10.2.5 Validar `docker compose up` e o fluxo completo da aplicação no container.
 
-- [ ] **10.3 Documentação**
-  - [ ] 10.3.1 Criar `README.md` com descrição, stack, como rodar localmente, como rodar com Docker e como executar os testes.
-  - [ ] 10.3.2 Atualizar este PRD marcando as tarefas concluídas.
+- [X] **10.3 Documentação**
+  - [X] 10.3.1 Criar `README.md` com descrição, stack, como rodar localmente, como rodar com Docker e como executar os testes.
+  - [X] 10.3.2 Atualizar este PRD marcando as tarefas concluídas.

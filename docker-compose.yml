@@ -1,0 +1,25 @@
+services:
+  web:
+    build: .
+    image: finanpy-web
+    # Aplica as migrações na inicialização e sobe o servidor de desenvolvimento.
+    command:
+      - sh
+      - -c
+      - python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:8000
+    ports:
+      - '8000:8000'
+    environment:
+      # Valores lidos do arquivo .env (opcional, veja .env.example);
+      # sem ele, valem os padrões de desenvolvimento.
+      SECRET_KEY: ${SECRET_KEY:-django-insecure-troque-esta-chave}
+      DEBUG: ${DEBUG:-True}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1}
+      SQLITE_PATH: /app/data/db.sqlite
+    volumes:
+      # Persiste o db.sqlite entre reinicializações e recriações do container.
+      - sqlite_data:/app/data
+    restart: unless-stopped
+
+volumes:
+  sqlite_data:
