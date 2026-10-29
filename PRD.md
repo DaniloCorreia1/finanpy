@@ -1186,24 +1186,24 @@ Critérios de aceite:
   - [X] 6.8.1 Validar que contas com transações não podem ser excluídas (Sprint 4).
   - [X] 6.8.2 Validar que categorias com transações não podem ser excluídas (Sprint 5).
 
-### Sprint 7 — Dashboard
+### Sprint 7 — Dashboard ✅
 
-- [ ] **7.1 Dados do dashboard**
-  - [ ] 7.1.1 Em `DashboardView.get_context_data()`, obter as contas do usuário com saldo anotado.
-  - [ ] 7.1.2 Calcular `total_balance` somando os saldos das contas.
-  - [ ] 7.1.3 Calcular `month_income` e `month_expense` filtrando transações do mês corrente (`date__year`/`date__month` com `timezone.localdate()`).
-  - [ ] 7.1.4 Calcular `month_result = month_income - month_expense`.
-  - [ ] 7.1.5 Obter `recent_transactions` (últimas 5) com `select_related`.
-  - [ ] 7.1.6 Tratar retornos `None` das agregações como `Decimal('0')`.
+- [X] **7.1 Dados do dashboard**
+  - [X] 7.1.1 Em `DashboardView.get_context_data()`, obter as contas do usuário com saldo anotado.
+  - [X] 7.1.2 Calcular `total_balance` somando os saldos das contas.
+  - [X] 7.1.3 Calcular `month_income` e `month_expense` filtrando transações do mês corrente (`date__year`/`date__month` com `timezone.localdate()`).
+  - [X] 7.1.4 Calcular `month_result = month_income - month_expense`.
+  - [X] 7.1.5 Obter `recent_transactions` (últimas 5) com `select_related`.
+  - [X] 7.1.6 Tratar retornos `None` das agregações como `Decimal('0')`.
 
-- [ ] **7.2 Template do dashboard**
-  - [ ] 7.2.1 Montar o `_page_header.html` com saudação e mês atual ("Resumo de outubro de 2026") e botão "Nova transação".
-  - [ ] 7.2.2 Renderizar 4 stat cards em grid: Saldo total (`card-highlight`), Entradas do mês (verde), Saídas do mês (rosa), Resultado do mês (verde ou rosa conforme o sinal).
-  - [ ] 7.2.3 Renderizar o card "Últimas transações" (`lg:col-span-2`) com lista compacta e link "Ver todas".
-  - [ ] 7.2.4 Renderizar o card "Minhas contas" com nome, tipo e saldo de cada conta e link "Gerenciar contas".
-  - [ ] 7.2.5 Renderizar o card "Ações rápidas" com botões Nova transação, Nova conta e Nova categoria.
-  - [ ] 7.2.6 Exibir empty states de primeiros passos quando o usuário não tiver contas ou transações.
-  - [ ] 7.2.7 Validar a responsividade do dashboard em mobile, tablet e desktop.
+- [X] **7.2 Template do dashboard**
+  - [X] 7.2.1 Montar o `_page_header.html` com saudação e mês atual ("Resumo de outubro de 2026") e botão "Nova transação".
+  - [X] 7.2.2 Renderizar 4 stat cards em grid: Saldo total (`card-highlight`), Entradas do mês (verde), Saídas do mês (rosa), Resultado do mês (verde ou rosa conforme o sinal).
+  - [X] 7.2.3 Renderizar o card "Últimas transações" (`lg:col-span-2`) com lista compacta e link "Ver todas".
+  - [X] 7.2.4 Renderizar o card "Minhas contas" com nome, tipo e saldo de cada conta e link "Gerenciar contas".
+  - [X] 7.2.5 Renderizar o card "Ações rápidas" com botões Nova transação, Nova conta e Nova categoria.
+  - [X] 7.2.6 Exibir empty states de primeiros passos quando o usuário não tiver contas ou transações.
+  - [X] 7.2.7 Validar a responsividade do dashboard em mobile, tablet e desktop.
 
 ### Sprint 8 — Refinamento e consistência
 

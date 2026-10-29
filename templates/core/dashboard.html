@@ -3,5 +3,114 @@
 {% block title %}Dashboard · Finanpy{% endblock %}
 
 {% block content %}
-  {% include 'components/_page_header.html' with title='Olá, '|add:user.first_name subtitle='Acompanhe aqui o resumo das suas finanças.' %}
+  {% url 'transactions:create' as transaction_create_url %}
+  {% url 'transactions:list' as transaction_list_url %}
+  {% url 'accounts:create' as account_create_url %}
+  {% url 'accounts:list' as account_list_url %}
+  {% url 'categories:create' as category_create_url %}
+
+  {% with month=today|date:'F'|lower year=today|date:'Y' %}
+    {% include 'components/_page_header.html' with title='Olá, '|add:user.first_name subtitle='Resumo de '|add:month|add:' de '|add:year action_url=transaction_create_url action_label='Nova transação' %}
+  {% endwith %}
+
+  <section class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4" aria-label="Resumo do mês">
+    {% include 'components/_stat_card.html' with label='Saldo total' value=total_balance color='neutral' icon='wallet' highlight=True %}
+    {% include 'components/_stat_card.html' with label='Entradas do mês' value=month_income color='income' icon='income' %}
+    {% include 'components/_stat_card.html' with label='Saídas do mês' value=month_expense color='expense' icon='expense' %}
+    {% if month_result < 0 %}
+      {% include 'components/_stat_card.html' with label='Resultado do mês' value=month_result color='expense' icon='result' %}
+    {% else %}
+      {% include 'components/_stat_card.html' with label='Resultado do mês' value=month_result color='income' icon='result' %}
+    {% endif %}
+  </section>
+
+  <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
+    <section class="card lg:col-span-2" aria-labelledby="recent-transactions-title">
+      <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+        <h2 id="recent-transactions-title" class="text-lg font-semibold text-slate-100">Últimas transações</h2>
+        {% if recent_transactions %}
+          <a href="{{ transaction_list_url }}" class="btn-ghost btn-sm shrink-0 whitespace-nowrap">Ver todas</a>
+        {% endif %}
+      </div>
+
+      {% if recent_transactions %}
+        <ul class="mt-4 divide-y divide-slate-800">
+          {% for transaction in recent_transactions %}
+            <li class="flex items-center justify-between gap-4 py-3">
+              <div class="min-w-0">
+                <p class="truncate font-medium text-slate-100">{{ transaction.description }}</p>
+                <p class="mt-0.5 truncate text-sm text-slate-400">{{ transaction.category.name }} · {{ transaction.account.name }}</p>
+              </div>
+              <div class="shrink-0 text-right">
+                {% if transaction.transaction_type == 'income' %}
+                  <p class="whitespace-nowrap amount-income">+ R$ {{ transaction.amount|floatformat:'2g' }}</p>
+                {% else %}
+                  <p class="whitespace-nowrap amount-expense">− R$ {{ transaction.amount|floatformat:'2g' }}</p>
+                {% endif %}
+                <p class="mt-0.5 text-xs tabular-nums text-slate-400">{{ transaction.date|date:'d/m/Y' }}</p>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        {% if accounts %}
+          {% include 'components/_empty_state.html' with message='Você ainda não registrou nenhuma transação. Registre a primeira para acompanhar suas finanças.' action_url=transaction_create_url action_label='Nova transação' bare=True %}
+        {% else %}
+          {% include 'components/_empty_state.html' with message='Para registrar transações, cadastre primeiro uma conta.' action_url=account_create_url action_label='Nova conta' bare=True %}
+        {% endif %}
+      {% endif %}
+    </section>
+
+    <div class="flex flex-col gap-6">
+      <section class="card" aria-labelledby="accounts-title">
+        <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+          <h2 id="accounts-title" class="whitespace-nowrap text-lg font-semibold text-slate-100">Minhas contas</h2>
+          {% if accounts %}
+            <a href="{{ account_list_url }}" class="btn-ghost btn-sm shrink-0 whitespace-nowrap">Gerenciar contas</a>
+          {% endif %}
+        </div>
+
+        {% if accounts %}
+          <ul class="mt-4 divide-y divide-slate-800">
+            {% for account in accounts %}
+              <li class="min-w-0 py-3">
+                <p class="truncate font-medium text-slate-100" title="{{ account.name }}">{{ account.name }}</p>
+                <div class="mt-1 flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+                  <span class="badge-neutral whitespace-nowrap">{{ account.get_account_type_display }}</span>
+                  <p class="whitespace-nowrap {% if account.balance < 0 %}amount-expense{% else %}amount-income{% endif %}">R$ {{ account.balance|floatformat:'2g' }}</p>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          {% include 'components/_empty_state.html' with message='Você ainda não cadastrou nenhuma conta. Crie a primeira para começar a registrar suas transações.' action_url=account_create_url action_label='Nova conta' bare=True %}
+        {% endif %}
+      </section>
+
+      <section class="card" aria-labelledby="quick-actions-title">
+        <h2 id="quick-actions-title" class="text-lg font-semibold text-slate-100">Ações rápidas</h2>
+        <div class="mt-4 flex flex-col gap-3">
+          <a href="{{ transaction_create_url }}" class="btn-primary w-full">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            Nova transação
+          </a>
+          <a href="{{ account_create_url }}" class="btn-secondary w-full">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
+            </svg>
+            Nova conta
+          </a>
+          <a href="{{ category_create_url }}" class="btn-secondary w-full">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" />
+            </svg>
+            Nova categoria
+          </a>
+        </div>
+      </section>
+    </div>
+  </div>
 {% endblock %}

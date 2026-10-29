@@ -2,9 +2,36 @@ from decimal import Decimal
 
 from django.conf import settings
 from django.db import models
-from django.db.models import Q, Sum
+from django.db.models import DecimalField, F, Q, Sum, Value
+from django.db.models.functions import Coalesce
 
 from categories.models import Category
+
+
+class AccountQuerySet(models.QuerySet):
+    def with_balance(self):
+        """Anota `balance`: saldo inicial + entradas - saídas."""
+        money = DecimalField(max_digits=12, decimal_places=2)
+        zero = Value(Decimal('0'), output_field=money)
+        income = Coalesce(
+            Sum(
+                'transactions__amount',
+                filter=Q(transactions__transaction_type=Category.INCOME),
+            ),
+            zero,
+            output_field=money,
+        )
+        expense = Coalesce(
+            Sum(
+                'transactions__amount',
+                filter=Q(transactions__transaction_type=Category.EXPENSE),
+            ),
+            zero,
+            output_field=money,
+        )
+        return self.annotate(
+            balance=F('initial_balance') + income - expense
+        )
 
 
 class Account(models.Model):
@@ -35,6 +62,8 @@ class Account(models.Model):
     )
     created_at = models.DateTimeField('criado em', auto_now_add=True)
     updated_at = models.DateTimeField('atualizado em', auto_now=True)
+
+    objects = AccountQuerySet.as_manager()
 
     class Meta:
         verbose_name = 'conta'

@@ -1,17 +1,11 @@
-from decimal import Decimal
-
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.db.models import (
-    DecimalField, F, ProtectedError, Q, Sum, Value,
-)
-from django.db.models.functions import Coalesce
+from django.db.models import ProtectedError
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
-from categories.models import Category
 from core.mixins import UserQuerySetMixin
 
 from .forms import AccountForm
@@ -24,27 +18,7 @@ class AccountListView(LoginRequiredMixin, UserQuerySetMixin, ListView):
     context_object_name = 'accounts'
 
     def get_queryset(self):
-        money = DecimalField(max_digits=12, decimal_places=2)
-        zero = Value(Decimal('0'), output_field=money)
-        income = Coalesce(
-            Sum(
-                'transactions__amount',
-                filter=Q(transactions__transaction_type=Category.INCOME),
-            ),
-            zero,
-            output_field=money,
-        )
-        expense = Coalesce(
-            Sum(
-                'transactions__amount',
-                filter=Q(transactions__transaction_type=Category.EXPENSE),
-            ),
-            zero,
-            output_field=money,
-        )
-        return super().get_queryset().annotate(
-            balance=F('initial_balance') + income - expense
-        )
+        return super().get_queryset().with_balance()
 
 
 class AccountCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
