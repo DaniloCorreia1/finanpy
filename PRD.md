@@ -895,51 +895,51 @@ Critérios de aceite:
 
 > Legenda: marque `[X]` conforme cada subtarefa e tarefa for concluída. Uma tarefa só é marcada quando todas as suas subtarefas estiverem concluídas.
 
-### Sprint 0 — Setup do projeto
+### Sprint 0 — Setup do projeto ✅
 
-- [ ] **0.1 Ambiente de desenvolvimento**
-  - [ x ] 0.1.1 Criar o diretório `finanpy` e inicializar repositório Git.
+- [X] **0.1 Ambiente de desenvolvimento**
+  - [X] 0.1.1 Criar o diretório `finanpy` e inicializar repositório Git.
     - Criar `.gitignore` com `__pycache__/`, `*.pyc`, `.venv/`, `db.sqlite`, `.env`.
-  - [ x ] 0.1.2 Criar ambiente virtual com `python -m venv .venv` e ativá-lo.
-  - [ x ] 0.1.3 Instalar Django 5.x com `pip install django`.
-  - [x ] 0.1.4 Gerar `requirements.txt` com `pip freeze > requirements.txt`.
+  - [X] 0.1.2 Criar ambiente virtual com `python -m venv .venv` e ativá-lo.
+  - [X] 0.1.3 Instalar Django 5.x com `pip install django`.
+  - [X] 0.1.4 Gerar `requirements.txt` com `pip freeze > requirements.txt`.
 
-- [ ] **0.2 Projeto Django**
-  - [x ] 0.2.1 Criar o projeto com `django-admin startproject core .` (gera `manage.py` na raiz e o pacote `core`).
-  - [x ] 0.2.2 Criar as apps: `python manage.py startapp users`, `profiles`, `accounts`, `categories`, `transactions`.
-  - [x ] 0.2.3 Registrar as apps em `INSTALLED_APPS` usando o caminho do `AppConfig` (ex.: `'users.apps.UsersConfig'`).
-  - [ ] 0.2.4 Definir `verbose_name` em português em cada `AppConfig` (ex.: `verbose_name = 'Usuários'`).
+- [X] **0.2 Projeto Django**
+  - [X] 0.2.1 Criar o projeto com `django-admin startproject core .` (gera `manage.py` na raiz e o pacote `core`).
+  - [X] 0.2.2 Criar as apps: `python manage.py startapp users`, `profiles`, `accounts`, `categories`, `transactions`.
+  - [X] 0.2.3 Registrar as apps em `INSTALLED_APPS` usando o caminho do `AppConfig` (ex.: `'users.apps.UsersConfig'`).
+  - [X] 0.2.4 Definir `verbose_name` em português em cada `AppConfig` (ex.: `verbose_name = 'Usuários'`).
 
-- [ ] **0.3 Configurações globais (`core/settings.py`)**
-  - [ ] 0.3.1 Definir `LANGUAGE_CODE = 'pt-br'`, `TIME_ZONE = 'America/Sao_Paulo'`, `USE_I18N = True`, `USE_TZ = True`.
-  - [ ] 0.3.2 Configurar `DATABASES['default']['NAME'] = BASE_DIR / 'db.sqlite'`.
-  - [ ] 0.3.3 Configurar `TEMPLATES['DIRS'] = [BASE_DIR / 'templates']`.
-  - [ ] 0.3.4 Adicionar `'django.contrib.humanize'` em `INSTALLED_APPS` e definir `USE_THOUSAND_SEPARATOR = True`.
-  - [ ] 0.3.5 Definir `LOGIN_URL = 'users:login'`, `LOGIN_REDIRECT_URL = 'dashboard'`, `LOGOUT_REDIRECT_URL = 'landing'`.
-  - [ ] 0.3.6 Revisar o arquivo para aspas simples e PEP 8.
+- [X] **0.3 Configurações globais (`core/settings.py`)**
+  - [X] 0.3.1 Definir `LANGUAGE_CODE = 'pt-br'`, `TIME_ZONE = 'America/Sao_Paulo'`, `USE_I18N = True`, `USE_TZ = True`.
+  - [X] 0.3.2 Configurar `DATABASES['default']['NAME'] = BASE_DIR / 'db.sqlite'`.
+  - [X] 0.3.3 Configurar `TEMPLATES['DIRS'] = [BASE_DIR / 'templates']`.
+  - [X] 0.3.4 Adicionar `'django.contrib.humanize'` em `INSTALLED_APPS` e definir `USE_THOUSAND_SEPARATOR = True`.
+  - [X] 0.3.5 Definir `LOGIN_URL = 'users:login'`, `LOGIN_REDIRECT_URL = 'dashboard'`, `LOGOUT_REDIRECT_URL = 'landing'`.
+  - [X] 0.3.6 Revisar o arquivo para aspas simples e PEP 8.
 
-- [ ] **0.4 Model de usuário customizado (antes da primeira migração)**
-  - [ ] 0.4.1 Criar `users/managers.py` com `UserManager(BaseUserManager)`.
+- [X] **0.4 Model de usuário customizado (antes da primeira migração)**
+  - [X] 0.4.1 Criar `users/managers.py` com `UserManager(BaseUserManager)`.
     - Implementar `create_user(email, password=None, **extra_fields)`: valida e-mail obrigatório, normaliza com `normalize_email`, define senha com `set_password`.
     - Implementar `create_superuser(email, password=None, **extra_fields)`: força `is_staff=True` e `is_superuser=True`.
-  - [ ] 0.4.2 Criar `users.models.User(AbstractUser)`.
+  - [X] 0.4.2 Criar `users.models.User(AbstractUser)`.
     - `username = None`.
     - `email = models.EmailField('e-mail', unique=True)`.
     - `created_at` e `updated_at`.
     - `USERNAME_FIELD = 'email'`, `REQUIRED_FIELDS = []`, `objects = UserManager()`.
     - `Meta` com `verbose_name = 'usuário'` e `verbose_name_plural = 'usuários'`.
     - `__str__` retornando o e-mail.
-  - [ ] 0.4.3 Definir `AUTH_USER_MODEL = 'users.User'` no `settings.py`.
-  - [ ] 0.4.4 Executar `python manage.py makemigrations users` e `python manage.py migrate`.
-  - [ ] 0.4.5 Registrar o `User` no admin com `UserAdmin` customizado.
+  - [X] 0.4.3 Definir `AUTH_USER_MODEL = 'users.User'` no `settings.py`.
+  - [X] 0.4.4 Executar `python manage.py makemigrations users` e `python manage.py migrate`.
+  - [X] 0.4.5 Registrar o `User` no admin com `UserAdmin` customizado.
     - Ajustar `ordering = ['email']`, `list_display = ['email', 'first_name', 'last_name', 'is_staff']`, `search_fields = ['email']`.
     - Redefinir `fieldsets` e `add_fieldsets` sem o campo `username`.
-  - [ x ] 0.4.6 Criar superusuário com `python manage.py createsuperuser` e validar acesso ao `/admin/` com e-mail.
+  - [X] 0.4.6 Criar superusuário com `python manage.py createsuperuser` e validar acesso ao `/admin/` com e-mail.
 
-- [ ] **0.5 Roteamento base**
-  - [ ] 0.5.1 Criar `urls.py` vazio (com `app_name` e `urlpatterns = []`) em cada app.
-  - [ ] 0.5.2 Incluir as URLs das apps em `core/urls.py` com `include()`.
-  - [ ] 0.5.3 Rodar `python manage.py runserver` e `python manage.py check` sem erros.
+- [X] **0.5 Roteamento base**
+  - [X] 0.5.1 Criar `urls.py` vazio (com `app_name` e `urlpatterns = []`) em cada app.
+  - [X] 0.5.2 Incluir as URLs das apps em `core/urls.py` com `include()`.
+  - [X] 0.5.3 Rodar `python manage.py runserver` e `python manage.py check` sem erros.
 
 ### Sprint 1 — Design system e templates base
 
