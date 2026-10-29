@@ -29,9 +29,10 @@ class AccountQuerySet(models.QuerySet):
             zero,
             output_field=money,
         )
+        # Meta.ordering is ignored in GROUP BY queries, so reapply it.
         return self.annotate(
             balance=F('initial_balance') + income - expense
-        )
+        ).order_by(*self.model._meta.ordering)
 
 
 class Account(models.Model):

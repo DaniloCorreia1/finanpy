@@ -1231,45 +1231,45 @@ Critérios de aceite:
   - [X] 8.4.1 Executar o fluxo completo: cadastro → criar contas → criar categorias → registrar transações → filtrar → dashboard → editar/excluir → perfil → logout.
   - [X] 8.4.2 Registrar e corrigir os problemas encontrados.
 
-### Sprint 9 — Testes automatizados
+### Sprint 9 — Testes automatizados ✅
 
-- [ ] **9.1 Testes de usuários**
-  - [ ] 9.1.1 Testar `UserManager.create_user` (e-mail obrigatório, normalização, senha com hash).
-  - [ ] 9.1.2 Testar `UserManager.create_superuser` (flags `is_staff` e `is_superuser`).
-  - [ ] 9.1.3 Testar cadastro: sucesso, e-mail duplicado, senhas divergentes, login automático e redirecionamento.
-  - [ ] 9.1.4 Testar login por e-mail: sucesso, credenciais inválidas, redirecionamento de usuário autenticado.
-  - [ ] 9.1.5 Testar logout e redirecionamento para a landing page.
+- [X] **9.1 Testes de usuários**
+  - [X] 9.1.1 Testar `UserManager.create_user` (e-mail obrigatório, normalização, senha com hash).
+  - [X] 9.1.2 Testar `UserManager.create_superuser` (flags `is_staff` e `is_superuser`).
+  - [X] 9.1.3 Testar cadastro: sucesso, e-mail duplicado, senhas divergentes, login automático e redirecionamento.
+  - [X] 9.1.4 Testar login por e-mail: sucesso, credenciais inválidas, redirecionamento de usuário autenticado.
+  - [X] 9.1.5 Testar logout e redirecionamento para a landing page.
 
-- [ ] **9.2 Testes de perfis**
-  - [ ] 9.2.1 Testar a criação automática do perfil pelo signal.
-  - [ ] 9.2.2 Testar a visualização e edição do perfil (incluindo nome e sobrenome).
+- [X] **9.2 Testes de perfis**
+  - [X] 9.2.1 Testar a criação automática do perfil pelo signal.
+  - [X] 9.2.2 Testar a visualização e edição do perfil (incluindo nome e sobrenome).
 
-- [ ] **9.3 Testes de contas**
-  - [ ] 9.3.1 Testar CRUD de contas para o usuário dono.
-  - [ ] 9.3.2 Testar 404 ao acessar conta de outro usuário.
-  - [ ] 9.3.3 Testar cálculo de saldo atual com entradas e saídas.
-  - [ ] 9.3.4 Testar bloqueio de exclusão de conta com transações.
+- [X] **9.3 Testes de contas**
+  - [X] 9.3.1 Testar CRUD de contas para o usuário dono.
+  - [X] 9.3.2 Testar 404 ao acessar conta de outro usuário.
+  - [X] 9.3.3 Testar cálculo de saldo atual com entradas e saídas.
+  - [X] 9.3.4 Testar bloqueio de exclusão de conta com transações.
 
-- [ ] **9.4 Testes de categorias**
-  - [ ] 9.4.1 Testar CRUD de categorias.
-  - [ ] 9.4.2 Testar validação de duplicidade por usuário e tipo.
-  - [ ] 9.4.3 Testar bloqueio de exclusão de categoria com transações.
+- [X] **9.4 Testes de categorias**
+  - [X] 9.4.1 Testar CRUD de categorias.
+  - [X] 9.4.2 Testar validação de duplicidade por usuário e tipo.
+  - [X] 9.4.3 Testar bloqueio de exclusão de categoria com transações.
 
-- [ ] **9.5 Testes de transações**
-  - [ ] 9.5.1 Testar CRUD de transações.
-  - [ ] 9.5.2 Testar validação de valor maior que zero.
-  - [ ] 9.5.3 Testar validação de compatibilidade de categoria e tipo.
-  - [ ] 9.5.4 Testar que selects exibem somente contas/categorias do usuário.
-  - [ ] 9.5.5 Testar cada filtro da listagem e a paginação.
+- [X] **9.5 Testes de transações**
+  - [X] 9.5.1 Testar CRUD de transações.
+  - [X] 9.5.2 Testar validação de valor maior que zero.
+  - [X] 9.5.3 Testar validação de compatibilidade de categoria e tipo.
+  - [X] 9.5.4 Testar que selects exibem somente contas/categorias do usuário.
+  - [X] 9.5.5 Testar cada filtro da listagem e a paginação.
 
-- [ ] **9.6 Testes do site público e dashboard**
-  - [ ] 9.6.1 Testar acesso público à landing page e exibição condicional dos botões.
-  - [ ] 9.6.2 Testar redirecionamento de não autenticados para o login em todas as rotas privadas.
-  - [ ] 9.6.3 Testar os valores do dashboard (saldo total, entradas, saídas e resultado do mês, últimas transações).
+- [X] **9.6 Testes do site público e dashboard**
+  - [X] 9.6.1 Testar acesso público à landing page e exibição condicional dos botões.
+  - [X] 9.6.2 Testar redirecionamento de não autenticados para o login em todas as rotas privadas.
+  - [X] 9.6.3 Testar os valores do dashboard (saldo total, entradas, saídas e resultado do mês, últimas transações).
 
-- [ ] **9.7 Execução**
-  - [ ] 9.7.1 Executar `python manage.py test` com todos os testes passando.
-  - [ ] 9.7.2 (Opcional) Medir cobertura com `coverage` e documentar o resultado.
+- [X] **9.7 Execução**
+  - [X] 9.7.1 Executar `python manage.py test` com todos os testes passando.
+  - [X] 9.7.2 (Opcional) Medir cobertura com `coverage` e documentar o resultado.
 
 ### Sprint 10 — Docker e entrega
 

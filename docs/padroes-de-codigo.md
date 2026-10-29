@@ -85,3 +85,11 @@ Todo model é registrado no admin com `list_display` e, quando fizer sentido, `l
 
 - Ficam para a sprint final, com `django.test.TestCase`, no `tests.py` de cada app.
 - Cobrem models, forms e views das apps principais. Meta de cobertura: ≥ 80%.
+- Resultado da Sprint 9 (29/10/2026): 179 testes passando e **99% de cobertura** (614 instruções, 2 não cobertas: `Transaction.__str__` e o ramo de e-mails duplicados por caixa em `UserManager.get_by_natural_key`).
+- Para medir (o `coverage` não faz parte do `requirements.txt`; instale-o no venv):
+
+  ```bash
+  pip install coverage
+  coverage run --source=. --omit=".venv/*,*/migrations/*,*/tests.py,manage.py,core/asgi.py,core/wsgi.py" manage.py test
+  coverage report
+  ```
