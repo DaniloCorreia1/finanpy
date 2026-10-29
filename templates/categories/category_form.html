@@ -1,0 +1,16 @@
+{% extends 'base_app.html' %}
+
+{% block title %}{% if object %}Editar categoria{% else %}Nova categoria{% endif %} · Finanpy{% endblock %}
+
+{% block content %}
+  {% url 'categories:list' as list_url %}
+  {% if object %}
+    {% include 'components/_page_header.html' with title='Editar categoria' subtitle='Atualize os dados da categoria.' %}
+  {% else %}
+    {% include 'components/_page_header.html' with title='Nova categoria' subtitle='Cadastre uma categoria para classificar suas transações.' %}
+  {% endif %}
+
+  <div class="card max-w-2xl">
+    {% include 'components/_form.html' with form=form submit_label='Salvar' cancel_url=list_url %}
+  </div>
+{% endblock %}

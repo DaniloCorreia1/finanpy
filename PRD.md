@@ -1097,38 +1097,38 @@ Critérios de aceite:
   - [X] 4.7.5 Criar `accounts/account_confirm_delete.html` incluindo `_confirm_delete.html`.
   - [X] 4.7.6 Validar que acessar conta de outro usuário retorna 404.
 
-### Sprint 5 — Categorias
+### Sprint 5 — Categorias ✅
 
-- [ ] **5.1 Model Category**
-  - [ ] 5.1.1 Criar `categories.models.Category` com `user` (FK, `related_name='categories'`), `name`, `category_type` (choices `income`/`expense`), `created_at`, `updated_at`.
-  - [ ] 5.1.2 Adicionar `UniqueConstraint(fields=['user', 'name', 'category_type'])`.
-  - [ ] 5.1.3 Definir `Meta` (`ordering = ['category_type', 'name']`) e `__str__`.
-  - [ ] 5.1.4 Gerar e aplicar as migrações.
-  - [ ] 5.1.5 Registrar no admin com `list_display`, `list_filter = ['category_type']`, `search_fields = ['name']`.
+- [X] **5.1 Model Category**
+  - [X] 5.1.1 Criar `categories.models.Category` com `user` (FK, `related_name='categories'`), `name`, `category_type` (choices `income`/`expense`), `created_at`, `updated_at`.
+  - [X] 5.1.2 Adicionar `UniqueConstraint(fields=['user', 'name', 'category_type'])`.
+  - [X] 5.1.3 Definir `Meta` (`ordering = ['category_type', 'name']`) e `__str__`.
+  - [X] 5.1.4 Gerar e aplicar as migrações.
+  - [X] 5.1.5 Registrar no admin com `list_display`, `list_filter = ['category_type']`, `search_fields = ['name']`.
 
-- [ ] **5.2 Form de categoria**
-  - [ ] 5.2.1 Criar `CategoryForm(ModelForm)` com `name` e `category_type`.
-  - [ ] 5.2.2 Receber o `user` no `__init__` do form (via `get_form_kwargs()` da view).
-  - [ ] 5.2.3 Implementar `clean()` validando duplicidade de nome/tipo para o usuário com a mensagem "Você já possui uma categoria com este nome e tipo." (desconsiderando a própria instância na edição).
+- [X] **5.2 Form de categoria**
+  - [X] 5.2.1 Criar `CategoryForm(ModelForm)` com `name` e `category_type`.
+  - [X] 5.2.2 Receber o `user` no `__init__` do form (via `get_form_kwargs()` da view).
+  - [X] 5.2.3 Implementar `clean()` validando duplicidade de nome/tipo para o usuário com a mensagem "Você já possui uma categoria com este nome e tipo." (desconsiderando a própria instância na edição).
 
-- [ ] **5.3 Listagem**
-  - [ ] 5.3.1 Criar `CategoryListView(LoginRequiredMixin, UserQuerySetMixin, ListView)`.
-  - [ ] 5.3.2 Separar no contexto `income_categories` e `expense_categories`.
-  - [ ] 5.3.3 Registrar a rota `/categorias/`.
-  - [ ] 5.3.4 Criar `categories/category_list.html` com duas colunas (`grid lg:grid-cols-2`): "Entradas" e "Saídas", cada item com badge do tipo e ações.
-  - [ ] 5.3.5 Exibir `_empty_state.html` quando não houver categorias.
+- [X] **5.3 Listagem**
+  - [X] 5.3.1 Criar `CategoryListView(LoginRequiredMixin, UserQuerySetMixin, ListView)`.
+  - [X] 5.3.2 Separar no contexto `income_categories` e `expense_categories`.
+  - [X] 5.3.3 Registrar a rota `/categorias/`.
+  - [X] 5.3.4 Criar `categories/category_list.html` com duas colunas (`grid lg:grid-cols-2`): "Entradas" e "Saídas", cada item com badge do tipo e ações.
+  - [X] 5.3.5 Exibir `_empty_state.html` quando não houver categorias.
 
-- [ ] **5.4 Criação e edição**
-  - [ ] 5.4.1 Criar `CategoryCreateView` com `SuccessMessageMixin` ("Categoria criada com sucesso.").
-  - [ ] 5.4.2 Criar `CategoryUpdateView` com `UserQuerySetMixin` ("Categoria atualizada com sucesso.").
-  - [ ] 5.4.3 Registrar as rotas `/categorias/nova/` e `/categorias/<pk>/editar/`.
-  - [ ] 5.4.4 Criar `categories/category_form.html`.
+- [X] **5.4 Criação e edição**
+  - [X] 5.4.1 Criar `CategoryCreateView` com `SuccessMessageMixin` ("Categoria criada com sucesso.").
+  - [X] 5.4.2 Criar `CategoryUpdateView` com `UserQuerySetMixin` ("Categoria atualizada com sucesso.").
+  - [X] 5.4.3 Registrar as rotas `/categorias/nova/` e `/categorias/<pk>/editar/`.
+  - [X] 5.4.4 Criar `categories/category_form.html`.
 
-- [ ] **5.5 Exclusão**
-  - [ ] 5.5.1 Criar `CategoryDeleteView` com `UserQuerySetMixin` e tratamento de `ProtectedError` ("Esta categoria possui transações e não pode ser excluída.").
-  - [ ] 5.5.2 Adicionar mensagem "Categoria excluída com sucesso.".
-  - [ ] 5.5.3 Registrar a rota `/categorias/<pk>/excluir/`.
-  - [ ] 5.5.4 Criar `categories/category_confirm_delete.html` incluindo `_confirm_delete.html`.
+- [X] **5.5 Exclusão**
+  - [X] 5.5.1 Criar `CategoryDeleteView` com `UserQuerySetMixin` e tratamento de `ProtectedError` ("Esta categoria possui transações e não pode ser excluída.").
+  - [X] 5.5.2 Adicionar mensagem "Categoria excluída com sucesso.".
+  - [X] 5.5.3 Registrar a rota `/categorias/<pk>/excluir/`.
+  - [X] 5.5.4 Criar `categories/category_confirm_delete.html` incluindo `_confirm_delete.html`.
 
 ### Sprint 6 — Transações
 
