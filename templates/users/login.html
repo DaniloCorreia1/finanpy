@@ -1,0 +1,22 @@
+{% extends 'base_public.html' %}
+
+{% block title %}Entrar · Finanpy{% endblock %}
+
+{% block content %}
+  {% url 'users:signup' as signup_url %}
+  <section class="mx-auto w-full max-w-md px-4 py-12 md:py-20">
+    <div class="card">
+      <div class="mb-6 text-center">
+        <h1 class="text-2xl md:text-3xl font-semibold text-slate-100">Entrar</h1>
+        <p class="mt-1 text-sm md:text-base text-slate-400">Acesse sua conta com e-mail e senha.</p>
+      </div>
+
+      {% include 'components/_form.html' with form=form single_column=True submit_full=True submit_label='Entrar' next_url=next %}
+
+      <p class="mt-6 text-center text-sm text-slate-400">
+        Não tem conta?
+        <a href="{{ signup_url }}" class="font-semibold text-violet-400 transition hover:text-violet-300">Cadastre-se</a>
+      </p>
+    </div>
+  </section>
+{% endblock %}

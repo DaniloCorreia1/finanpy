@@ -1,0 +1,7 @@
+{% extends 'base_app.html' %}
+
+{% block title %}Dashboard · Finanpy{% endblock %}
+
+{% block content %}
+  {% include 'components/_page_header.html' with title='Olá, '|add:user.first_name subtitle='Acompanhe aqui o resumo das suas finanças.' %}
+{% endblock %}

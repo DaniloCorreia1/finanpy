@@ -5,9 +5,12 @@
     cancel_url     quando informado, exibe o botão "Cancelar"
     single_column  True para manter os campos em uma coluna (ex.: login e cadastro)
     submit_full    True para o botão principal ocupar toda a largura
+    next_url       quando informado, envia um input hidden name="next" com esse valor
+                   (ex.: login preserva o redirecionamento com next_url=next)
 {% endcomment %}
 <form method="post" novalidate>
   {% csrf_token %}
+  {% if next_url %}<input type="hidden" name="next" value="{{ next_url }}">{% endif %}
 
   {% if form.non_field_errors %}
     <div class="mb-5 space-y-1 rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-300" role="alert">

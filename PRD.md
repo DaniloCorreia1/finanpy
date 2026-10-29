@@ -993,37 +993,37 @@ Critérios de aceite:
   - [X] 1.6.5 Criar a seção final de CTA "Comece agora, é grátis" com botão Cadastre-se.
   - [X] 1.6.6 Validar responsividade em 360px, 768px e 1280px.
 
-### Sprint 2 — Autenticação
+### Sprint 2 — Autenticação ✅
 
-- [ ] **2.1 Cadastro**
-  - [ ] 2.1.1 Criar `users/forms.py` com `SignUpForm(UserCreationForm)`.
+- [X] **2.1 Cadastro**
+  - [X] 2.1.1 Criar `users/forms.py` com `SignUpForm(UserCreationForm)`.
     - `Meta.model = User`, `Meta.fields = ['first_name', 'last_name', 'email']`.
     - Labels em português: "Nome", "Sobrenome", "E-mail", "Senha", "Confirmar senha".
     - Tornar `first_name` e `last_name` obrigatórios.
-  - [ ] 2.1.2 Garantir mensagem de e-mail duplicado: "Já existe um usuário com este e-mail." (via `error_messages` do campo `email` no model).
-  - [ ] 2.1.3 Criar `SignUpView(CreateView)` com `form_class = SignUpForm` e `template_name = 'users/signup.html'`.
-  - [ ] 2.1.4 Sobrescrever `form_valid()` para chamar `login(self.request, self.object)` e redirecionar ao dashboard.
-  - [ ] 2.1.5 Adicionar mensagem de sucesso "Conta criada com sucesso. Bem-vindo(a) ao Finanpy!".
-  - [ ] 2.1.6 Redirecionar usuários autenticados para o dashboard sobrescrevendo `dispatch()`.
-  - [ ] 2.1.7 Registrar a rota `/cadastro/` com nome `signup`.
-  - [ ] 2.1.8 Criar `users/signup.html` estendendo `base_public.html`: card centralizado `max-w-md`, título, `_form.html`, botão `btn-primary w-full` "Criar conta" e link "Já tem conta? Entrar".
+  - [X] 2.1.2 Garantir mensagem de e-mail duplicado: "Já existe um usuário com este e-mail." (via `error_messages` do campo `email` no model).
+  - [X] 2.1.3 Criar `SignUpView(CreateView)` com `form_class = SignUpForm` e `template_name = 'users/signup.html'`.
+  - [X] 2.1.4 Sobrescrever `form_valid()` para chamar `login(self.request, self.object)` e redirecionar ao dashboard.
+  - [X] 2.1.5 Adicionar mensagem de sucesso "Conta criada com sucesso. Bem-vindo(a) ao Finanpy!".
+  - [X] 2.1.6 Redirecionar usuários autenticados para o dashboard sobrescrevendo `dispatch()`.
+  - [X] 2.1.7 Registrar a rota `/cadastro/` com nome `signup`.
+  - [X] 2.1.8 Criar `users/signup.html` estendendo `base_public.html`: card centralizado `max-w-md`, título, `_form.html`, botão `btn-primary w-full` "Criar conta" e link "Já tem conta? Entrar".
 
-- [ ] **2.2 Login por e-mail**
-  - [ ] 2.2.1 Criar `EmailAuthenticationForm(AuthenticationForm)` com label do campo `username` como "E-mail", widget `EmailInput` e mensagem `invalid_login` "E-mail ou senha inválidos.".
-  - [ ] 2.2.2 Criar `UserLoginView(LoginView)` com `authentication_form = EmailAuthenticationForm`, `template_name = 'users/login.html'` e `redirect_authenticated_user = True`.
-  - [ ] 2.2.3 Registrar a rota `/entrar/` com nome `login`.
-  - [ ] 2.2.4 Criar `users/login.html` estendendo `base_public.html`: card centralizado, campos, botão "Entrar" e link "Não tem conta? Cadastre-se".
-  - [ ] 2.2.5 Validar o redirecionamento via parâmetro `next`.
+- [X] **2.2 Login por e-mail**
+  - [X] 2.2.1 Criar `EmailAuthenticationForm(AuthenticationForm)` com label do campo `username` como "E-mail", widget `EmailInput` e mensagem `invalid_login` "E-mail ou senha inválidos.".
+  - [X] 2.2.2 Criar `UserLoginView(LoginView)` com `authentication_form = EmailAuthenticationForm`, `template_name = 'users/login.html'` e `redirect_authenticated_user = True`.
+  - [X] 2.2.3 Registrar a rota `/entrar/` com nome `login`.
+  - [X] 2.2.4 Criar `users/login.html` estendendo `base_public.html`: card centralizado, campos, botão "Entrar" e link "Não tem conta? Cadastre-se".
+  - [X] 2.2.5 Validar o redirecionamento via parâmetro `next`.
 
-- [ ] **2.3 Logout**
-  - [ ] 2.3.1 Registrar `LogoutView` na rota `/sair/` com nome `logout`.
-  - [ ] 2.3.2 Validar o logout via POST a partir da sidebar e o redirecionamento para `landing`.
+- [X] **2.3 Logout**
+  - [X] 2.3.1 Registrar `LogoutView` na rota `/sair/` com nome `logout`.
+  - [X] 2.3.2 Validar o logout via POST a partir da sidebar e o redirecionamento para `landing`.
 
-- [ ] **2.4 Dashboard placeholder**
-  - [ ] 2.4.1 Criar `DashboardView(LoginRequiredMixin, TemplateView)` em `core/views.py` com `template_name = 'core/dashboard.html'`.
-  - [ ] 2.4.2 Registrar a rota `/dashboard/` com nome `dashboard`.
-  - [ ] 2.4.3 Criar `core/dashboard.html` estendendo `base_app.html` com `_page_header.html` "Olá, {{ user.first_name }}".
-  - [ ] 2.4.4 Validar o fluxo completo: landing → cadastro → dashboard → sair → login → dashboard.
+- [X] **2.4 Dashboard placeholder**
+  - [X] 2.4.1 Criar `DashboardView(LoginRequiredMixin, TemplateView)` em `core/views.py` com `template_name = 'core/dashboard.html'`.
+  - [X] 2.4.2 Registrar a rota `/dashboard/` com nome `dashboard`.
+  - [X] 2.4.3 Criar `core/dashboard.html` estendendo `base_app.html` com `_page_header.html` "Olá, {{ user.first_name }}".
+  - [X] 2.4.4 Validar o fluxo completo: landing → cadastro → dashboard → sair → login → dashboard.
 
 ### Sprint 3 — Perfis
 

@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.urls import include, path
 
-from core.views import LandingPageView
+from core.views import DashboardView, LandingPageView
 
 urlpatterns = [
     path('', LandingPageView.as_view(), name='landing'),
+    path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('admin/', admin.site.urls),
     path('', include('users.urls')),
     path('perfil/', include('profiles.urls')),

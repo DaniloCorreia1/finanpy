@@ -6,7 +6,11 @@ from .managers import UserManager
 
 class User(AbstractUser):
     username = None
-    email = models.EmailField('e-mail', unique=True)
+    email = models.EmailField(
+        'e-mail',
+        unique=True,
+        error_messages={'unique': 'Já existe um usuário com este e-mail.'},
+    )
     created_at = models.DateTimeField('criado em', auto_now_add=True)
     updated_at = models.DateTimeField('atualizado em', auto_now=True)
 
