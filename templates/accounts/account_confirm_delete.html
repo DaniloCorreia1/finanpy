@@ -1,0 +1,10 @@
+{% extends 'base_app.html' %}
+
+{% block title %}Excluir conta · Finanpy{% endblock %}
+
+{% block content %}
+  {% url 'accounts:list' as list_url %}
+  {% include 'components/_page_header.html' with title='Excluir conta' %}
+
+  {% include 'components/_confirm_delete.html' with message='Tem certeza que deseja excluir a conta' object_name=object.name cancel_url=list_url %}
+{% endblock %}

@@ -1053,49 +1053,49 @@ Critérios de aceite:
   - [X] 3.4.6 Registrar a rota `/perfil/editar/` com nome `update`.
   - [X] 3.4.7 Criar `profiles/profile_form.html` usando `_form_field.html` para os dois forms.
 
-### Sprint 4 — Contas bancárias
+### Sprint 4 — Contas bancárias ✅
 
-- [ ] **4.1 Model Account**
-  - [ ] 4.1.1 Criar `accounts.models.Account` com `user` (FK, `related_name='accounts'`), `name`, `bank` (opcional), `account_type` (choices), `initial_balance` (`DecimalField(max_digits=12, decimal_places=2, default=0)`), `created_at`, `updated_at`.
-  - [ ] 4.1.2 Definir as choices: `checking` → "Conta corrente", `savings` → "Poupança", `wallet` → "Carteira", `investment` → "Investimento".
-  - [ ] 4.1.3 Definir `Meta` (`ordering = ['name']`, `verbose_name`) e `__str__`.
-  - [ ] 4.1.4 Gerar e aplicar as migrações.
-  - [ ] 4.1.5 Registrar no admin com `list_display`, `list_filter = ['account_type']` e `search_fields = ['name', 'bank']`.
+- [X] **4.1 Model Account**
+  - [X] 4.1.1 Criar `accounts.models.Account` com `user` (FK, `related_name='accounts'`), `name`, `bank` (opcional), `account_type` (choices), `initial_balance` (`DecimalField(max_digits=12, decimal_places=2, default=0)`), `created_at`, `updated_at`.
+  - [X] 4.1.2 Definir as choices: `checking` → "Conta corrente", `savings` → "Poupança", `wallet` → "Carteira", `investment` → "Investimento".
+  - [X] 4.1.3 Definir `Meta` (`ordering = ['name']`, `verbose_name`) e `__str__`.
+  - [X] 4.1.4 Gerar e aplicar as migrações.
+  - [X] 4.1.5 Registrar no admin com `list_display`, `list_filter = ['account_type']` e `search_fields = ['name', 'bank']`.
 
-- [ ] **4.2 Mixin de isolamento por usuário**
-  - [ ] 4.2.1 Criar em cada app (ou reaproveitar via import de `accounts`) o padrão `get_queryset()` filtrando `user=self.request.user`.
+- [X] **4.2 Mixin de isolamento por usuário**
+  - [X] 4.2.1 Criar em cada app (ou reaproveitar via import de `accounts`) o padrão `get_queryset()` filtrando `user=self.request.user`.
     - Implementar como mixin simples `UserQuerySetMixin` em `core/mixins.py`, reutilizado por accounts, categories e transactions.
-  - [ ] 4.2.2 Atribuir `form.instance.user = self.request.user` no `form_valid()` das `CreateView`s.
+  - [X] 4.2.2 Atribuir `form.instance.user = self.request.user` no `form_valid()` das `CreateView`s.
 
-- [ ] **4.3 Form de conta**
-  - [ ] 4.3.1 Criar `AccountForm(ModelForm)` com `name`, `bank`, `account_type`, `initial_balance`.
-  - [ ] 4.3.2 Configurar widget `NumberInput(attrs={'step': '0.01'})` para `initial_balance`.
+- [X] **4.3 Form de conta**
+  - [X] 4.3.1 Criar `AccountForm(ModelForm)` com `name`, `bank`, `account_type`, `initial_balance`.
+  - [X] 4.3.2 Configurar widget `NumberInput(attrs={'step': '0.01'})` para `initial_balance`.
 
-- [ ] **4.4 Saldo atual**
-  - [ ] 4.4.1 Implementar o método `current_balance()` no model `Account`, somando entradas e subtraindo saídas com `aggregate(Sum(..., filter=Q(...)))`.
+- [X] **4.4 Saldo atual**
+  - [X] 4.4.1 Implementar o método `current_balance()` no model `Account`, somando entradas e subtraindo saídas com `aggregate(Sum(..., filter=Q(...)))`.
     - Implementar após a criação do model `Transaction` (Sprint 6); até lá, retornar `initial_balance`.
-  - [ ] 4.4.2 Na listagem, evitar N+1 usando `annotate()` com `Sum` condicional no `get_queryset()`.
+  - [X] 4.4.2 Na listagem, evitar N+1 usando `annotate()` com `Sum` condicional no `get_queryset()`.
 
-- [ ] **4.5 Listagem de contas**
-  - [ ] 4.5.1 Criar `AccountListView(LoginRequiredMixin, UserQuerySetMixin, ListView)`.
-  - [ ] 4.5.2 Registrar a rota `/contas/` com nome `list`.
-  - [ ] 4.5.3 Criar `accounts/account_list.html`: `_page_header.html` com botão "Nova conta" e grid de cards.
-  - [ ] 4.5.4 Cada card exibe: nome, banco, `badge-neutral` com o tipo, saldo atual (verde/rosa) e ações Editar/Excluir.
-  - [ ] 4.5.5 Exibir `_empty_state.html` quando não houver contas.
+- [X] **4.5 Listagem de contas**
+  - [X] 4.5.1 Criar `AccountListView(LoginRequiredMixin, UserQuerySetMixin, ListView)`.
+  - [X] 4.5.2 Registrar a rota `/contas/` com nome `list`.
+  - [X] 4.5.3 Criar `accounts/account_list.html`: `_page_header.html` com botão "Nova conta" e grid de cards.
+  - [X] 4.5.4 Cada card exibe: nome, banco, `badge-neutral` com o tipo, saldo atual (verde/rosa) e ações Editar/Excluir.
+  - [X] 4.5.5 Exibir `_empty_state.html` quando não houver contas.
 
-- [ ] **4.6 Criação e edição**
-  - [ ] 4.6.1 Criar `AccountCreateView` com `SuccessMessageMixin` ("Conta criada com sucesso.") e `success_url = reverse_lazy('accounts:list')`.
-  - [ ] 4.6.2 Criar `AccountUpdateView` com `UserQuerySetMixin` e mensagem "Conta atualizada com sucesso.".
-  - [ ] 4.6.3 Registrar as rotas `/contas/nova/` e `/contas/<pk>/editar/`.
-  - [ ] 4.6.4 Criar `accounts/account_form.html` com título dinâmico ("Nova conta" / "Editar conta") e `_form.html`.
+- [X] **4.6 Criação e edição**
+  - [X] 4.6.1 Criar `AccountCreateView` com `SuccessMessageMixin` ("Conta criada com sucesso.") e `success_url = reverse_lazy('accounts:list')`.
+  - [X] 4.6.2 Criar `AccountUpdateView` com `UserQuerySetMixin` e mensagem "Conta atualizada com sucesso.".
+  - [X] 4.6.3 Registrar as rotas `/contas/nova/` e `/contas/<pk>/editar/`.
+  - [X] 4.6.4 Criar `accounts/account_form.html` com título dinâmico ("Nova conta" / "Editar conta") e `_form.html`.
 
-- [ ] **4.7 Exclusão**
-  - [ ] 4.7.1 Criar `AccountDeleteView` com `UserQuerySetMixin`.
-  - [ ] 4.7.2 Sobrescrever `form_valid()` capturando `ProtectedError` e exibindo "Esta conta possui transações e não pode ser excluída." com redirect para a lista.
-  - [ ] 4.7.3 Adicionar mensagem de sucesso "Conta excluída com sucesso.".
-  - [ ] 4.7.4 Registrar a rota `/contas/<pk>/excluir/`.
-  - [ ] 4.7.5 Criar `accounts/account_confirm_delete.html` incluindo `_confirm_delete.html`.
-  - [ ] 4.7.6 Validar que acessar conta de outro usuário retorna 404.
+- [X] **4.7 Exclusão**
+  - [X] 4.7.1 Criar `AccountDeleteView` com `UserQuerySetMixin`.
+  - [X] 4.7.2 Sobrescrever `form_valid()` capturando `ProtectedError` e exibindo "Esta conta possui transações e não pode ser excluída." com redirect para a lista.
+  - [X] 4.7.3 Adicionar mensagem de sucesso "Conta excluída com sucesso.".
+  - [X] 4.7.4 Registrar a rota `/contas/<pk>/excluir/`.
+  - [X] 4.7.5 Criar `accounts/account_confirm_delete.html` incluindo `_confirm_delete.html`.
+  - [X] 4.7.6 Validar que acessar conta de outro usuário retorna 404.
 
 ### Sprint 5 — Categorias
 

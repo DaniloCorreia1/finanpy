@@ -1,0 +1,16 @@
+{% extends 'base_app.html' %}
+
+{% block title %}{% if object %}Editar conta{% else %}Nova conta{% endif %} · Finanpy{% endblock %}
+
+{% block content %}
+  {% url 'accounts:list' as list_url %}
+  {% if object %}
+    {% include 'components/_page_header.html' with title='Editar conta' subtitle='Atualize os dados da conta.' %}
+  {% else %}
+    {% include 'components/_page_header.html' with title='Nova conta' subtitle='Cadastre uma conta para registrar suas movimentações.' %}
+  {% endif %}
+
+  <div class="card max-w-2xl">
+    {% include 'components/_form.html' with form=form submit_label='Salvar' cancel_url=list_url %}
+  </div>
+{% endblock %}
