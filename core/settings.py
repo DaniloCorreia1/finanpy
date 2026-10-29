@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'categories.apps.CategoriesConfig',
     'transactions.apps.TransactionsConfig',
+    'ai',
 ]
 
 MIDDLEWARE = [
