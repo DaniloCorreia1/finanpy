@@ -1130,61 +1130,61 @@ Critérios de aceite:
   - [X] 5.5.3 Registrar a rota `/categorias/<pk>/excluir/`.
   - [X] 5.5.4 Criar `categories/category_confirm_delete.html` incluindo `_confirm_delete.html`.
 
-### Sprint 6 — Transações
+### Sprint 6 — Transações ✅
 
-- [ ] **6.1 Model Transaction**
-  - [ ] 6.1.1 Criar `transactions.models.Transaction` com `user` (FK CASCADE), `account` (FK PROTECT, `related_name='transactions'`), `category` (FK PROTECT, `related_name='transactions'`), `transaction_type` (choices), `description`, `amount` (`DecimalField(max_digits=12, decimal_places=2)`), `date` (`DateField`), `created_at`, `updated_at`.
-  - [ ] 6.1.2 Reutilizar as constantes de tipo (`INCOME`/`EXPENSE`) da `Category` para manter consistência.
-  - [ ] 6.1.3 Adicionar `MinValueValidator(Decimal('0.01'))` em `amount`.
-  - [ ] 6.1.4 Definir `Meta` (`ordering = ['-date', '-created_at']`) e `__str__`.
-  - [ ] 6.1.5 Gerar e aplicar as migrações.
-  - [ ] 6.1.6 Registrar no admin com `list_display`, `list_filter = ['transaction_type', 'date']`, `search_fields = ['description']`, `list_select_related`.
+- [X] **6.1 Model Transaction**
+  - [X] 6.1.1 Criar `transactions.models.Transaction` com `user` (FK CASCADE), `account` (FK PROTECT, `related_name='transactions'`), `category` (FK PROTECT, `related_name='transactions'`), `transaction_type` (choices), `description`, `amount` (`DecimalField(max_digits=12, decimal_places=2)`), `date` (`DateField`), `created_at`, `updated_at`.
+  - [X] 6.1.2 Reutilizar as constantes de tipo (`INCOME`/`EXPENSE`) da `Category` para manter consistência.
+  - [X] 6.1.3 Adicionar `MinValueValidator(Decimal('0.01'))` em `amount`.
+  - [X] 6.1.4 Definir `Meta` (`ordering = ['-date', '-created_at']`) e `__str__`.
+  - [X] 6.1.5 Gerar e aplicar as migrações.
+  - [X] 6.1.6 Registrar no admin com `list_display`, `list_filter = ['transaction_type', 'date']`, `search_fields = ['description']`, `list_select_related`.
 
-- [ ] **6.2 Saldo das contas**
-  - [ ] 6.2.1 Implementar de fato `Account.current_balance()` com agregação condicional sobre `transactions`.
-  - [ ] 6.2.2 Implementar o `annotate()` de saldo no `get_queryset()` de `AccountListView`.
-  - [ ] 6.2.3 Validar o saldo com cenários de entrada, saída, edição e exclusão de transações.
+- [X] **6.2 Saldo das contas**
+  - [X] 6.2.1 Implementar de fato `Account.current_balance()` com agregação condicional sobre `transactions`.
+  - [X] 6.2.2 Implementar o `annotate()` de saldo no `get_queryset()` de `AccountListView`.
+  - [X] 6.2.3 Validar o saldo com cenários de entrada, saída, edição e exclusão de transações.
 
-- [ ] **6.3 Form de transação**
-  - [ ] 6.3.1 Criar `TransactionForm(ModelForm)` com `transaction_type`, `description`, `amount`, `date`, `account`, `category`.
-  - [ ] 6.3.2 Receber `user` no `__init__` e filtrar `account` e `category` querysets pelo usuário.
-  - [ ] 6.3.3 Definir `initial` da data com `timezone.localdate()`.
-  - [ ] 6.3.4 Configurar widgets: `DateInput(type='date')`, `NumberInput(step='0.01', min='0.01')`.
-  - [ ] 6.3.5 Implementar `clean()` validando compatibilidade entre `category.category_type` e `transaction_type` com a mensagem "A categoria deve ser do mesmo tipo da transação.".
-  - [ ] 6.3.6 Exibir as categorias no select agrupadas por tipo (`optgroup` "Entradas"/"Saídas") usando choices agrupadas.
-  - [ ] 6.3.7 Personalizar a mensagem de valor mínimo: "O valor deve ser maior que zero.".
+- [X] **6.3 Form de transação**
+  - [X] 6.3.1 Criar `TransactionForm(ModelForm)` com `transaction_type`, `description`, `amount`, `date`, `account`, `category`.
+  - [X] 6.3.2 Receber `user` no `__init__` e filtrar `account` e `category` querysets pelo usuário.
+  - [X] 6.3.3 Definir `initial` da data com `timezone.localdate()`.
+  - [X] 6.3.4 Configurar widgets: `DateInput(type='date')`, `NumberInput(step='0.01', min='0.01')`.
+  - [X] 6.3.5 Implementar `clean()` validando compatibilidade entre `category.category_type` e `transaction_type` com a mensagem "A categoria deve ser do mesmo tipo da transação.".
+  - [X] 6.3.6 Exibir as categorias no select agrupadas por tipo (`optgroup` "Entradas"/"Saídas") usando choices agrupadas.
+  - [X] 6.3.7 Personalizar a mensagem de valor mínimo: "O valor deve ser maior que zero.".
 
-- [ ] **6.4 Criação e edição**
-  - [ ] 6.4.1 Criar `TransactionCreateView` passando `user` via `get_form_kwargs()` e atribuindo `form.instance.user`.
-  - [ ] 6.4.2 Criar `TransactionUpdateView` com `UserQuerySetMixin`.
-  - [ ] 6.4.3 Adicionar mensagens "Transação registrada com sucesso." e "Transação atualizada com sucesso.".
-  - [ ] 6.4.4 Registrar as rotas `/transacoes/nova/` e `/transacoes/<pk>/editar/`.
-  - [ ] 6.4.5 Criar `transactions/transaction_form.html` com grid de 2 colunas e descrição em `md:col-span-2`.
-  - [ ] 6.4.6 Orientar o usuário quando não houver contas/categorias: alerta de aviso com links para cadastrá-las.
+- [X] **6.4 Criação e edição**
+  - [X] 6.4.1 Criar `TransactionCreateView` passando `user` via `get_form_kwargs()` e atribuindo `form.instance.user`.
+  - [X] 6.4.2 Criar `TransactionUpdateView` com `UserQuerySetMixin`.
+  - [X] 6.4.3 Adicionar mensagens "Transação registrada com sucesso." e "Transação atualizada com sucesso.".
+  - [X] 6.4.4 Registrar as rotas `/transacoes/nova/` e `/transacoes/<pk>/editar/`.
+  - [X] 6.4.5 Criar `transactions/transaction_form.html` com grid de 2 colunas e descrição em `md:col-span-2`.
+  - [X] 6.4.6 Orientar o usuário quando não houver contas/categorias: alerta de aviso com links para cadastrá-las.
 
-- [ ] **6.5 Listagem**
-  - [ ] 6.5.1 Criar `TransactionListView(LoginRequiredMixin, UserQuerySetMixin, ListView)` com `paginate_by = 20` e `select_related('account', 'category')`.
-  - [ ] 6.5.2 Registrar a rota `/transacoes/`.
-  - [ ] 6.5.3 Criar `transactions/transaction_list.html` com tabela (Data, Descrição, Categoria, Conta, Valor, Ações) dentro de `card p-0 overflow-x-auto`.
-  - [ ] 6.5.4 Formatar valores com `+`/`−`, cores `amount-income`/`amount-expense` e formato brasileiro.
-  - [ ] 6.5.5 Exibir `_empty_state.html` quando não houver transações.
-  - [ ] 6.5.6 Incluir `_pagination.html`.
+- [X] **6.5 Listagem**
+  - [X] 6.5.1 Criar `TransactionListView(LoginRequiredMixin, UserQuerySetMixin, ListView)` com `paginate_by = 20` e `select_related('account', 'category')`.
+  - [X] 6.5.2 Registrar a rota `/transacoes/`.
+  - [X] 6.5.3 Criar `transactions/transaction_list.html` com tabela (Data, Descrição, Categoria, Conta, Valor, Ações) dentro de `card p-0 overflow-x-auto`.
+  - [X] 6.5.4 Formatar valores com `+`/`−`, cores `amount-income`/`amount-expense` e formato brasileiro.
+  - [X] 6.5.5 Exibir `_empty_state.html` quando não houver transações.
+  - [X] 6.5.6 Incluir `_pagination.html`.
 
-- [ ] **6.6 Filtros**
-  - [ ] 6.6.1 Criar `TransactionFilterForm(forms.Form)` (não persistido) com `transaction_type`, `account`, `category`, `start_date`, `end_date`, todos opcionais, com querysets filtrados pelo usuário.
-  - [ ] 6.6.2 Aplicar os filtros no `get_queryset()` a partir de `request.GET` quando o form for válido.
-  - [ ] 6.6.3 Enviar o form de filtro ao contexto e renderizá-lo em um `card` acima da tabela, em grid `md:grid-cols-5`.
-  - [ ] 6.6.4 Adicionar botões "Filtrar" (`btn-secondary`) e "Limpar filtros" (`btn-ghost`).
-  - [ ] 6.6.5 Garantir que a paginação preserve os parâmetros de filtro.
+- [X] **6.6 Filtros**
+  - [X] 6.6.1 Criar `TransactionFilterForm(forms.Form)` (não persistido) com `transaction_type`, `account`, `category`, `start_date`, `end_date`, todos opcionais, com querysets filtrados pelo usuário.
+  - [X] 6.6.2 Aplicar os filtros no `get_queryset()` a partir de `request.GET` quando o form for válido.
+  - [X] 6.6.3 Enviar o form de filtro ao contexto e renderizá-lo em um `card` acima da tabela, em grid `md:grid-cols-5`.
+  - [X] 6.6.4 Adicionar botões "Filtrar" (`btn-secondary`) e "Limpar filtros" (`btn-ghost`).
+  - [X] 6.6.5 Garantir que a paginação preserve os parâmetros de filtro.
 
-- [ ] **6.7 Exclusão**
-  - [ ] 6.7.1 Criar `TransactionDeleteView` com `UserQuerySetMixin` e mensagem "Transação excluída com sucesso.".
-  - [ ] 6.7.2 Registrar a rota `/transacoes/<pk>/excluir/`.
-  - [ ] 6.7.3 Criar `transactions/transaction_confirm_delete.html` incluindo `_confirm_delete.html`.
+- [X] **6.7 Exclusão**
+  - [X] 6.7.1 Criar `TransactionDeleteView` com `UserQuerySetMixin` e mensagem "Transação excluída com sucesso.".
+  - [X] 6.7.2 Registrar a rota `/transacoes/<pk>/excluir/`.
+  - [X] 6.7.3 Criar `transactions/transaction_confirm_delete.html` incluindo `_confirm_delete.html`.
 
-- [ ] **6.8 Validação das regras de exclusão protegida**
-  - [ ] 6.8.1 Validar que contas com transações não podem ser excluídas (Sprint 4).
-  - [ ] 6.8.2 Validar que categorias com transações não podem ser excluídas (Sprint 5).
+- [X] **6.8 Validação das regras de exclusão protegida**
+  - [X] 6.8.1 Validar que contas com transações não podem ser excluídas (Sprint 4).
+  - [X] 6.8.2 Validar que categorias com transações não podem ser excluídas (Sprint 5).
 
 ### Sprint 7 — Dashboard
 

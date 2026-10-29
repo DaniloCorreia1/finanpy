@@ -1,5 +1,10 @@
+from decimal import Decimal
+
 from django.conf import settings
 from django.db import models
+from django.db.models import Q, Sum
+
+from categories.models import Category
 
 
 class Account(models.Model):
@@ -40,6 +45,12 @@ class Account(models.Model):
         return self.name
 
     def current_balance(self):
-        # Sprint 6: somar entradas e subtrair saídas das transações com
-        # aggregate(Sum(..., filter=Q(...))). Até lá, só o saldo inicial.
-        return self.initial_balance
+        totals = self.transactions.aggregate(
+            income=Sum('amount', filter=Q(transaction_type=Category.INCOME)),
+            expense=Sum(
+                'amount', filter=Q(transaction_type=Category.EXPENSE)
+            ),
+        )
+        income = totals['income'] or Decimal('0')
+        expense = totals['expense'] or Decimal('0')
+        return self.initial_balance + income - expense

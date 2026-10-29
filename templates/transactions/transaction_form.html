@@ -1,0 +1,62 @@
+{% extends 'base_app.html' %}
+
+{% block title %}{% if object %}Editar transação{% else %}Nova transação{% endif %} · Finanpy{% endblock %}
+
+{% block content %}
+  {% url 'transactions:list' as list_url %}
+  {% if object %}
+    {% include 'components/_page_header.html' with title='Editar transação' subtitle='Atualize os dados da transação.' %}
+  {% else %}
+    {% include 'components/_page_header.html' with title='Nova transação' subtitle='Registre uma entrada ou saída em uma das suas contas.' %}
+  {% endif %}
+
+  {% if not has_accounts or not has_categories %}
+    <div class="mb-6 max-w-2xl rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-300" role="alert">
+      <p>
+        {% if not has_accounts and not has_categories %}
+          Para registrar uma transação, você precisa ter ao menos uma conta e uma categoria cadastradas.
+        {% elif not has_accounts %}
+          Para registrar uma transação, você precisa ter ao menos uma conta cadastrada.
+        {% else %}
+          Para registrar uma transação, você precisa ter ao menos uma categoria cadastrada.
+        {% endif %}
+      </p>
+      <p class="mt-2 flex flex-col gap-1 sm:flex-row sm:gap-4">
+        {% if not has_accounts %}
+          <a href="{% url 'accounts:create' %}" class="font-medium underline underline-offset-4 hover:text-amber-200">Cadastrar conta</a>
+        {% endif %}
+        {% if not has_categories %}
+          <a href="{% url 'categories:create' %}" class="font-medium underline underline-offset-4 hover:text-amber-200">Cadastrar categoria</a>
+        {% endif %}
+      </p>
+    </div>
+  {% endif %}
+
+  <div class="card max-w-2xl">
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+        <div class="mb-5 space-y-1 rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-300" role="alert">
+          {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+        </div>
+      {% endif %}
+
+      {% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+        {% include 'components/_form_field.html' with field=form.description full_width=True %}
+        {% include 'components/_form_field.html' with field=form.transaction_type %}
+        {% include 'components/_form_field.html' with field=form.category %}
+        {% include 'components/_form_field.html' with field=form.amount %}
+        {% include 'components/_form_field.html' with field=form.date %}
+        {% include 'components/_form_field.html' with field=form.account %}
+      </div>
+
+      <div class="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+        <a href="{{ list_url }}" class="btn-secondary w-full sm:w-auto">Cancelar</a>
+        <button type="submit" class="btn-primary w-full sm:w-auto">Salvar</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}

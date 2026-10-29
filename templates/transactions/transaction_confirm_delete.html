@@ -1,0 +1,10 @@
+{% extends 'base_app.html' %}
+
+{% block title %}Excluir transação · Finanpy{% endblock %}
+
+{% block content %}
+  {% url 'transactions:list' as list_url %}
+  {% include 'components/_page_header.html' with title='Excluir transação' %}
+
+  {% include 'components/_confirm_delete.html' with message='Tem certeza que deseja excluir a transação' object_name=object.description cancel_url=list_url %}
+{% endblock %}

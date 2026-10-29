@@ -1,8 +1,11 @@
 {% comment %}
   Uso: {% include 'components/_form_field.html' with field=form.campo %}
   Campos de texto longo (textarea) ocupam as duas colunas do grid a partir de md.
+  Parâmetro opcional:
+    full_width  True para o campo ocupar as duas colunas do grid a partir de md
+                (ex.: descrição da transação)
 {% endcomment %}
-<div class="form-field{% if field.widget_type == 'textarea' %} md:col-span-2{% endif %}">
+<div class="form-field{% if full_width or field.widget_type == 'textarea' %} md:col-span-2{% endif %}">
   {% if field.widget_type == 'checkbox' %}
     <div class="flex items-center gap-3">
       {{ field }}
