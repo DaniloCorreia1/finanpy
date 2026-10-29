@@ -1,0 +1,32 @@
+{% comment %}
+  Uso: {% include 'components/_form.html' with form=form submit_label='Salvar' cancel_url=cancel_url %}
+  Parâmetros opcionais:
+    submit_label   texto do botão principal (padrão: "Salvar")
+    cancel_url     quando informado, exibe o botão "Cancelar"
+    single_column  True para manter os campos em uma coluna (ex.: login e cadastro)
+    submit_full    True para o botão principal ocupar toda a largura
+{% endcomment %}
+<form method="post" novalidate>
+  {% csrf_token %}
+
+  {% if form.non_field_errors %}
+    <div class="mb-5 space-y-1 rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-300" role="alert">
+      {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+    </div>
+  {% endif %}
+
+  {% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+
+  <div class="grid grid-cols-1 gap-5{% if not single_column %} md:grid-cols-2{% endif %}">
+    {% for field in form.visible_fields %}
+      {% include 'components/_form_field.html' with field=field %}
+    {% endfor %}
+  </div>
+
+  <div class="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+    {% if cancel_url %}
+      <a href="{{ cancel_url }}" class="btn-secondary w-full sm:w-auto">Cancelar</a>
+    {% endif %}
+    <button type="submit" class="btn-primary {% if submit_full %}w-full{% else %}w-full sm:w-auto{% endif %}">{{ submit_label|default:'Salvar' }}</button>
+  </div>
+</form>

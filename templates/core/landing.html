@@ -1,0 +1,95 @@
+{% extends 'base_public.html' %}
+
+{% block title %}Finanças pessoais · Finanpy{% endblock %}
+
+{% block content %}
+  {% url 'dashboard' as dashboard_url %}
+  {% url 'users:login' as login_url %}
+  {% url 'users:signup' as signup_url %}
+
+  {# Hero #}
+  <section class="mx-auto max-w-6xl px-4 pt-12 pb-16 text-center md:px-6 md:pt-20 md:pb-24">
+    <span class="badge-neutral">Finanças pessoais sem complicação</span>
+    <h1 class="mx-auto mt-6 max-w-4xl text-4xl md:text-6xl font-bold tracking-tight text-slate-100">
+      Organize seu dinheiro com <span class="text-gradient">clareza e controle</span>
+    </h1>
+    <p class="mx-auto mt-6 max-w-2xl text-sm md:text-base text-slate-300">
+      Cadastre suas contas bancárias, classifique entradas e saídas por categoria e acompanhe
+      seu saldo e o resultado do mês em um dashboard simples e direto.
+    </p>
+    <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+      {% if user.is_authenticated %}
+        <a href="{{ dashboard_url|default:'#' }}" class="btn-primary w-full sm:w-auto">Ir para o dashboard</a>
+      {% else %}
+        <a href="{{ signup_url|default:'#' }}" class="btn-primary w-full sm:w-auto">Cadastre-se</a>
+        <a href="{{ login_url|default:'#' }}" class="btn-secondary w-full sm:w-auto">Entrar</a>
+      {% endif %}
+    </div>
+  </section>
+
+  {# Recursos #}
+  <section class="mx-auto max-w-6xl px-4 pb-16 md:px-6 md:pb-24" aria-labelledby="recursos-titulo">
+    <div class="text-center">
+      <p class="text-xs font-medium uppercase tracking-wide text-slate-400">Recursos</p>
+      <h2 id="recursos-titulo" class="mt-2 text-2xl md:text-3xl font-semibold text-slate-100">Tudo o que você precisa para controlar suas finanças</h2>
+    </div>
+
+    <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <article class="card">
+        <span class="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-900/30">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
+          </svg>
+        </span>
+        <h3 class="mt-4 text-lg font-semibold text-slate-100">Contas</h3>
+        <p class="mt-2 text-sm text-slate-400">Cadastre contas correntes, poupanças, carteiras e investimentos e veja o saldo atual de cada uma.</p>
+      </article>
+
+      <article class="card">
+        <span class="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-900/30">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" />
+          </svg>
+        </span>
+        <h3 class="mt-4 text-lg font-semibold text-slate-100">Categorias</h3>
+        <p class="mt-2 text-sm text-slate-400">Crie categorias de entrada e saída do seu jeito para entender para onde vai o seu dinheiro.</p>
+      </article>
+
+      <article class="card">
+        <span class="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-900/30">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+          </svg>
+        </span>
+        <h3 class="mt-4 text-lg font-semibold text-slate-100">Transações</h3>
+        <p class="mt-2 text-sm text-slate-400">Registre entradas e saídas em segundos e filtre por período, tipo, conta ou categoria.</p>
+      </article>
+
+      <article class="card">
+        <span class="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-900/30">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
+          </svg>
+        </span>
+        <h3 class="mt-4 text-lg font-semibold text-slate-100">Dashboard</h3>
+        <p class="mt-2 text-sm text-slate-400">Acompanhe o saldo total, as entradas e saídas do mês e as últimas transações em um só lugar.</p>
+      </article>
+    </div>
+  </section>
+
+  {# CTA final #}
+  <section class="mx-auto max-w-6xl px-4 pb-16 md:px-6 md:pb-24">
+    <div class="card-highlight text-center md:p-12">
+      <h2 class="text-2xl md:text-3xl font-semibold text-slate-100">Comece agora, é grátis</h2>
+      <p class="mx-auto mt-3 max-w-xl text-sm md:text-base text-slate-300">Crie sua conta em menos de um minuto e tenha uma visão clara das suas finanças.</p>
+      <div class="mt-8">
+        {% if user.is_authenticated %}
+          <a href="{{ dashboard_url|default:'#' }}" class="btn-primary w-full sm:w-auto">Ir para o dashboard</a>
+        {% else %}
+          <a href="{{ signup_url|default:'#' }}" class="btn-primary w-full sm:w-auto">Cadastre-se</a>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+{% endblock %}

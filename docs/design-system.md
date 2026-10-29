@@ -97,7 +97,8 @@ A definição completa de cada classe (`@apply`) está na seção 9.4 do [PRD.md
 </div>
 ```
 
-- `components/_form.html` inclui o `csrf_token`, os `non_field_errors` em um alerta rosa e os campos.
+- `components/_form.html` inclui o `csrf_token`, os `non_field_errors` em um alerta rosa e os campos. Parâmetros opcionais: `submit_label`, `cancel_url`, `single_column` (coluna única, para login/cadastro em card `max-w-md`) e `submit_full` (botão de envio com `w-full`).
+- O help text é renderizado em `div.form-help` (não `<p>`), pois pode conter listas HTML (ex.: regras de senha).
 - Formulários ficam dentro de `card`, com `max-w-2xl`.
 - Grid de campos: `grid grid-cols-1 gap-5 md:grid-cols-2`; campos longos com `md:col-span-2`.
 
@@ -141,7 +142,7 @@ O item ativo usa `nav-link-active`, comparando `request.resolver_match.app_name`
 | Alerta de erro | `rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-300` |
 | Alerta de aviso | `rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-300` |
 | Empty state | `card text-center py-12` + ícone, texto `text-slate-400` e `btn-primary` |
-| Stat card | `card` + label, valor de destaque e ícone em círculo com gradiente |
+| Stat card | `card` (ou `card-highlight` com `highlight=True`) + label, valor de destaque e ícone em círculo com gradiente |
 | Confirmação de exclusão | `card max-w-lg` com o nome do objeto, `btn-danger` e `btn-secondary` |
 | Paginação | `btn-secondary btn-sm` (anterior/próxima) + "Página X de Y" |
 

@@ -1,0 +1,17 @@
+{% comment %}
+  Uso: {% include 'components/_page_header.html' with title='Contas' subtitle='...' action_url=url action_label='Nova conta' %}
+{% endcomment %}
+<div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+  <div class="min-w-0">
+    <h1 class="text-2xl md:text-3xl font-semibold text-slate-100">{{ title }}</h1>
+    {% if subtitle %}<p class="mt-1 text-sm md:text-base text-slate-400">{{ subtitle }}</p>{% endif %}
+  </div>
+  {% if action_url and action_label %}
+    <a href="{{ action_url }}" class="btn-primary w-full sm:w-auto">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+      </svg>
+      {{ action_label }}
+    </a>
+  {% endif %}
+</div>

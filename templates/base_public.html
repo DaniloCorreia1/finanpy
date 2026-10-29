@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  {% url 'landing' as landing_url %}
+  {% url 'dashboard' as dashboard_url %}
+  {% url 'users:login' as login_url %}
+  {% url 'users:signup' as signup_url %}
+  <div class="relative isolate flex min-h-full flex-col overflow-hidden">
+    <div class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[40rem] bg-[radial-gradient(ellipse_at_top,_rgba(124,58,237,0.25),_transparent_60%)]" aria-hidden="true"></div>
+
+    <header class="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-5 md:px-6">
+      <a href="{{ landing_url|default:'#' }}" class="rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 text-xl md:text-2xl font-bold tracking-tight text-gradient">Finanpy</a>
+      <nav class="flex items-center gap-2" aria-label="Acesso">
+        {% if user.is_authenticated %}
+          <a href="{{ dashboard_url|default:'#' }}" class="btn-primary">Ir para o dashboard</a>
+        {% else %}
+          <a href="{{ login_url|default:'#' }}" class="btn-ghost">Entrar</a>
+          <a href="{{ signup_url|default:'#' }}" class="btn-primary">Cadastre-se</a>
+        {% endif %}
+      </nav>
+    </header>
+
+    <main class="flex-1">
+      <div class="mx-auto max-w-6xl px-4 md:px-6">
+        {% include 'components/_messages.html' %}
+      </div>
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="border-t border-slate-800">
+      <div class="mx-auto max-w-6xl px-4 py-6 text-center text-sm text-slate-500 md:px-6">
+        © Finanpy
+      </div>
+    </footer>
+  </div>
+{% endblock %}

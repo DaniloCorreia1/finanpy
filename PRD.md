@@ -255,7 +255,7 @@ flowchart TD
 | Camada | Tecnologia |
 |---|---|
 | Linguagem | Python 3.13+ |
-| Framework | Django 5+ |
+| Framework | Django 5.1+ (a tag `{% querystring %}` da paginação exige 5.1) |
 | Frontend | Django Template Language (DTL) |
 | Estilização | TailwindCSS (v3 via CDN oficial, com `tailwind.config` e componentes `@apply` definidos no `base.html`) |
 | Fonte | Inter (Google Fonts) |
@@ -941,57 +941,57 @@ Critérios de aceite:
   - [X] 0.5.2 Incluir as URLs das apps em `core/urls.py` com `include()`.
   - [X] 0.5.3 Rodar `python manage.py runserver` e `python manage.py check` sem erros.
 
-### Sprint 1 — Design system e templates base
+### Sprint 1 — Design system e templates base ✅
 
-- [ ] **1.1 Estrutura de templates**
-  - [ ] 1.1.1 Criar `templates/` com as pastas `components/`, `core/`, `users/`, `profiles/`, `accounts/`, `categories/`, `transactions/`.
+- [X] **1.1 Estrutura de templates**
+  - [X] 1.1.1 Criar `templates/` com as pastas `components/`, `core/`, `users/`, `profiles/`, `accounts/`, `categories/`, `transactions/`.
 
-- [ ] **1.2 Template raiz (`base.html`)**
-  - [ ] 1.2.1 Criar a estrutura HTML com `lang="pt-br"`, meta viewport e bloco `title`.
-  - [ ] 1.2.2 Adicionar a fonte Inter via Google Fonts.
-  - [ ] 1.2.3 Adicionar o script do Tailwind via CDN e o `tailwind.config` com `fontFamily.sans = ['Inter', ...]`.
-  - [ ] 1.2.4 Criar o bloco `<style type="text/tailwindcss">` com `@layer components`.
-  - [ ] 1.2.5 Implementar as classes de botões: `btn`, `btn-primary`, `btn-secondary`, `btn-ghost`, `btn-danger`, `btn-sm`.
-  - [ ] 1.2.6 Implementar as classes de formulário: `form-label`, `form-input`, `form-field` (input/select/textarea/checkbox), `form-help`, `form-error`.
-  - [ ] 1.2.7 Implementar as classes de superfície: `card`, `card-highlight`.
-  - [ ] 1.2.8 Implementar badges: `badge`, `badge-income`, `badge-expense`, `badge-neutral`.
-  - [ ] 1.2.9 Implementar tabela: `table` com estilos de `th`, `td` e hover de linha.
-  - [ ] 1.2.10 Implementar navegação: `nav-link`, `nav-link-active`.
-  - [ ] 1.2.11 Implementar utilitários de texto: `text-gradient`, `amount-income`, `amount-expense`.
-  - [ ] 1.2.12 Definir o `<body>` com `bg-slate-950 font-sans text-slate-100 antialiased` e bloco `body`.
+- [X] **1.2 Template raiz (`base.html`)**
+  - [X] 1.2.1 Criar a estrutura HTML com `lang="pt-br"`, meta viewport e bloco `title`.
+  - [X] 1.2.2 Adicionar a fonte Inter via Google Fonts.
+  - [X] 1.2.3 Adicionar o script do Tailwind via CDN e o `tailwind.config` com `fontFamily.sans = ['Inter', ...]`.
+  - [X] 1.2.4 Criar o bloco `<style type="text/tailwindcss">` com `@layer components`.
+  - [X] 1.2.5 Implementar as classes de botões: `btn`, `btn-primary`, `btn-secondary`, `btn-ghost`, `btn-danger`, `btn-sm`.
+  - [X] 1.2.6 Implementar as classes de formulário: `form-label`, `form-input`, `form-field` (input/select/textarea/checkbox), `form-help`, `form-error`.
+  - [X] 1.2.7 Implementar as classes de superfície: `card`, `card-highlight`.
+  - [X] 1.2.8 Implementar badges: `badge`, `badge-income`, `badge-expense`, `badge-neutral`.
+  - [X] 1.2.9 Implementar tabela: `table` com estilos de `th`, `td` e hover de linha.
+  - [X] 1.2.10 Implementar navegação: `nav-link`, `nav-link-active`.
+  - [X] 1.2.11 Implementar utilitários de texto: `text-gradient`, `amount-income`, `amount-expense`.
+  - [X] 1.2.12 Definir o `<body>` com `bg-slate-950 font-sans text-slate-100 antialiased` e bloco `body`.
 
-- [ ] **1.3 Componentes (partials)**
-  - [ ] 1.3.1 Criar `components/_messages.html`: itera `messages` e aplica o estilo de alerta por `message.tags` (success, error, warning, info).
-  - [ ] 1.3.2 Criar `components/_form_field.html`: label, campo, help text e erros, envoltos em `div.form-field`.
-  - [ ] 1.3.3 Criar `components/_form.html`: `csrf_token`, alerta de `non_field_errors`, grid `md:grid-cols-2` incluindo `_form_field.html` para cada campo e slot de botões (Salvar/Cancelar).
-  - [ ] 1.3.4 Criar `components/_page_header.html`: recebe `title`, `subtitle` e bloco de ações à direita (via variáveis `action_url` e `action_label`).
-  - [ ] 1.3.5 Criar `components/_stat_card.html`: recebe `label`, `value`, `color` (income/expense/neutral) e ícone.
-  - [ ] 1.3.6 Criar `components/_empty_state.html`: recebe `message`, `action_url` e `action_label`.
-  - [ ] 1.3.7 Criar `components/_pagination.html`: usa `page_obj` e preserva a querystring atual (exceto `page`).
-  - [ ] 1.3.8 Criar `components/_confirm_delete.html`: card com mensagem, nome do objeto, `btn-danger` "Excluir" e `btn-secondary` "Cancelar".
+- [X] **1.3 Componentes (partials)**
+  - [X] 1.3.1 Criar `components/_messages.html`: itera `messages` e aplica o estilo de alerta por `message.tags` (success, error, warning, info).
+  - [X] 1.3.2 Criar `components/_form_field.html`: label, campo, help text e erros, envoltos em `div.form-field`.
+  - [X] 1.3.3 Criar `components/_form.html`: `csrf_token`, alerta de `non_field_errors`, grid `md:grid-cols-2` incluindo `_form_field.html` para cada campo e slot de botões (Salvar/Cancelar). Parâmetros opcionais: `submit_label` (padrão "Salvar"), `cancel_url`, `single_column` (coluna única, para cards `max-w-md` de login/cadastro) e `submit_full` (botão com `w-full`).
+  - [X] 1.3.4 Criar `components/_page_header.html`: recebe `title`, `subtitle` e bloco de ações à direita (via variáveis `action_url` e `action_label`).
+  - [X] 1.3.5 Criar `components/_stat_card.html`: recebe `label`, `value`, `color` (income/expense/neutral) e ícone; `highlight` opcional aplica `card-highlight` (card de saldo).
+  - [X] 1.3.6 Criar `components/_empty_state.html`: recebe `message`, `action_url` e `action_label`.
+  - [X] 1.3.7 Criar `components/_pagination.html`: usa `page_obj` e preserva a querystring atual (exceto `page`).
+  - [X] 1.3.8 Criar `components/_confirm_delete.html`: card com mensagem, nome do objeto, `btn-danger` "Excluir" e `btn-secondary` "Cancelar".
 
-- [ ] **1.4 Layout público (`base_public.html`)**
-  - [ ] 1.4.1 Estender `base.html` e criar header com logo "Finanpy" em `text-gradient`.
-  - [ ] 1.4.2 Adicionar botões "Entrar" (`btn-ghost`) e "Cadastre-se" (`btn-primary`) no header.
-  - [ ] 1.4.3 Exibir "Ir para o dashboard" quando `user.is_authenticated`.
-  - [ ] 1.4.4 Adicionar glow radial de fundo e footer simples com "© Finanpy".
-  - [ ] 1.4.5 Incluir `_messages.html` e bloco `content`.
+- [X] **1.4 Layout público (`base_public.html`)**
+  - [X] 1.4.1 Estender `base.html` e criar header com logo "Finanpy" em `text-gradient`.
+  - [X] 1.4.2 Adicionar botões "Entrar" (`btn-ghost`) e "Cadastre-se" (`btn-primary`) no header.
+  - [X] 1.4.3 Exibir "Ir para o dashboard" quando `user.is_authenticated`.
+  - [X] 1.4.4 Adicionar glow radial de fundo e footer simples com "© Finanpy".
+  - [X] 1.4.5 Incluir `_messages.html` e bloco `content`.
 
-- [ ] **1.5 Layout autenticado (`base_app.html`)**
-  - [ ] 1.5.1 Criar `components/_sidebar.html` com logo, links (Dashboard, Transações, Contas, Categorias, Perfil) com ícones SVG inline.
-  - [ ] 1.5.2 Implementar destaque do item ativo com `nav-link-active` usando `request.resolver_match`.
-  - [ ] 1.5.3 Adicionar no rodapé da sidebar o nome/e-mail do usuário e o botão "Sair" (form POST com `csrf_token`).
-  - [ ] 1.5.4 Criar `components/_topbar.html` para mobile (`lg:hidden`) com logo e botão hambúrguer.
-  - [ ] 1.5.5 Implementar o toggle da sidebar no mobile com JavaScript mínimo inline (alternar classe `hidden`).
-  - [ ] 1.5.6 Montar `base_app.html`: sidebar fixa em `lg`, área de conteúdo com container `max-w-7xl`, `_messages.html` e bloco `content`.
+- [X] **1.5 Layout autenticado (`base_app.html`)**
+  - [X] 1.5.1 Criar `components/_sidebar.html` com logo, links (Dashboard, Transações, Contas, Categorias, Perfil) com ícones SVG inline.
+  - [X] 1.5.2 Implementar destaque do item ativo com `nav-link-active` usando `request.resolver_match`.
+  - [X] 1.5.3 Adicionar no rodapé da sidebar o nome/e-mail do usuário e o botão "Sair" (form POST com `csrf_token`).
+  - [X] 1.5.4 Criar `components/_topbar.html` para mobile (`lg:hidden`) com logo e botão hambúrguer.
+  - [X] 1.5.5 Implementar o toggle da sidebar no mobile com JavaScript mínimo inline (alternar classe `hidden`).
+  - [X] 1.5.6 Montar `base_app.html`: sidebar fixa em `lg`, área de conteúdo com container `max-w-7xl`, `_messages.html` e bloco `content`.
 
-- [ ] **1.6 Landing page**
-  - [ ] 1.6.1 Criar `LandingPageView(TemplateView)` em `core/views.py` com `template_name = 'core/landing.html'`.
-  - [ ] 1.6.2 Registrar a rota `/` com nome `landing` em `core/urls.py`.
-  - [ ] 1.6.3 Criar a seção hero: título com `text-gradient`, subtítulo e botões de CTA.
-  - [ ] 1.6.4 Criar a seção de recursos com 4 cards (Contas, Categorias, Transações, Dashboard) em grid responsivo.
-  - [ ] 1.6.5 Criar a seção final de CTA "Comece agora, é grátis" com botão Cadastre-se.
-  - [ ] 1.6.6 Validar responsividade em 360px, 768px e 1280px.
+- [X] **1.6 Landing page**
+  - [X] 1.6.1 Criar `LandingPageView(TemplateView)` em `core/views.py` com `template_name = 'core/landing.html'`.
+  - [X] 1.6.2 Registrar a rota `/` com nome `landing` em `core/urls.py`.
+  - [X] 1.6.3 Criar a seção hero: título com `text-gradient`, subtítulo e botões de CTA.
+  - [X] 1.6.4 Criar a seção de recursos com 4 cards (Contas, Categorias, Transações, Dashboard) em grid responsivo.
+  - [X] 1.6.5 Criar a seção final de CTA "Comece agora, é grátis" com botão Cadastre-se.
+  - [X] 1.6.6 Validar responsividade em 360px, 768px e 1280px.
 
 ### Sprint 2 — Autenticação
 

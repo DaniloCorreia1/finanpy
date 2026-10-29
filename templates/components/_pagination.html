@@ -1,0 +1,19 @@
+{% comment %}
+  Uso: {% include 'components/_pagination.html' %} (requer page_obj no contexto).
+  O {% querystring %} preserva os parâmetros atuais (ex.: filtros) e substitui apenas "page".
+{% endcomment %}
+{% if page_obj and page_obj.paginator.num_pages > 1 %}
+  <nav class="mt-6 flex items-center justify-between gap-3" aria-label="Paginação">
+    <div class="w-24">
+      {% if page_obj.has_previous %}
+        <a href="{% querystring page=page_obj.previous_page_number %}" class="btn-secondary btn-sm">Anterior</a>
+      {% endif %}
+    </div>
+    <p class="text-center text-sm text-slate-400">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</p>
+    <div class="flex w-24 justify-end">
+      {% if page_obj.has_next %}
+        <a href="{% querystring page=page_obj.next_page_number %}" class="btn-secondary btn-sm">Próxima</a>
+      {% endif %}
+    </div>
+  </nav>
+{% endif %}
