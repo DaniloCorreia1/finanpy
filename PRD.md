@@ -1025,33 +1025,33 @@ Critérios de aceite:
   - [X] 2.4.3 Criar `core/dashboard.html` estendendo `base_app.html` com `_page_header.html` "Olá, {{ user.first_name }}".
   - [X] 2.4.4 Validar o fluxo completo: landing → cadastro → dashboard → sair → login → dashboard.
 
-### Sprint 3 — Perfis
+### Sprint 3 — Perfis ✅
 
-- [ ] **3.1 Model Profile**
-  - [ ] 3.1.1 Criar `profiles.models.Profile` com `user` (`OneToOneField`, `related_name='profile'`), `phone` (`CharField`, opcional), `birth_date` (`DateField`, opcional), `created_at`, `updated_at`.
-  - [ ] 3.1.2 Definir `Meta` com `verbose_name` em português e `__str__`.
-  - [ ] 3.1.3 Gerar e aplicar as migrações.
-  - [ ] 3.1.4 Registrar no admin com `list_display = ['user', 'phone', 'created_at']`.
+- [X] **3.1 Model Profile**
+  - [X] 3.1.1 Criar `profiles.models.Profile` com `user` (`OneToOneField`, `related_name='profile'`), `phone` (`CharField`, opcional), `birth_date` (`DateField`, opcional), `created_at`, `updated_at`.
+  - [X] 3.1.2 Definir `Meta` com `verbose_name` em português e `__str__`.
+  - [X] 3.1.3 Gerar e aplicar as migrações.
+  - [X] 3.1.4 Registrar no admin com `list_display = ['user', 'phone', 'created_at']`.
 
-- [ ] **3.2 Signal de criação de perfil**
-  - [ ] 3.2.1 Criar `profiles/signals.py` com receiver `post_save` do `AUTH_USER_MODEL` que cria o `Profile` quando `created=True`.
-  - [ ] 3.2.2 Importar o módulo de signals no `ready()` de `ProfilesConfig`.
-  - [ ] 3.2.3 Criar perfis para usuários já existentes (ex.: superusuário) via shell ou migração de dados simples.
-  - [ ] 3.2.4 Validar que novo cadastro gera perfil automaticamente.
+- [X] **3.2 Signal de criação de perfil**
+  - [X] 3.2.1 Criar `profiles/signals.py` com receiver `post_save` do `AUTH_USER_MODEL` que cria o `Profile` quando `created=True`.
+  - [X] 3.2.2 Importar o módulo de signals no `ready()` de `ProfilesConfig`.
+  - [X] 3.2.3 Criar perfis para usuários já existentes (ex.: superusuário) via shell ou migração de dados simples.
+  - [X] 3.2.4 Validar que novo cadastro gera perfil automaticamente.
 
-- [ ] **3.3 Visualização do perfil**
-  - [ ] 3.3.1 Criar `ProfileDetailView(LoginRequiredMixin, DetailView)` com `get_object()` retornando `self.request.user.profile`.
-  - [ ] 3.3.2 Registrar a rota `/perfil/` com nome `detail`.
-  - [ ] 3.3.3 Criar `profiles/profile_detail.html`: card com avatar de iniciais em círculo com gradiente, nome, e-mail, telefone, data de nascimento e botão "Editar perfil".
+- [X] **3.3 Visualização do perfil**
+  - [X] 3.3.1 Criar `ProfileDetailView(LoginRequiredMixin, DetailView)` com `get_object()` retornando `self.request.user.profile`.
+  - [X] 3.3.2 Registrar a rota `/perfil/` com nome `detail`.
+  - [X] 3.3.3 Criar `profiles/profile_detail.html`: card com avatar de iniciais em círculo com gradiente, nome, e-mail, telefone, data de nascimento e botão "Editar perfil".
 
-- [ ] **3.4 Edição do perfil**
-  - [ ] 3.4.1 Criar `ProfileForm(ModelForm)` com `phone` e `birth_date` (widget `type='date'`).
-  - [ ] 3.4.2 Criar `UserNameForm(ModelForm)` com `first_name` e `last_name`.
-  - [ ] 3.4.3 Criar `ProfileUpdateView(LoginRequiredMixin, UpdateView)` para o perfil, instanciando também o `UserNameForm` no `get_context_data()` e salvando ambos em `post()` quando válidos.
-  - [ ] 3.4.4 Exibir o e-mail como campo somente leitura no template.
-  - [ ] 3.4.5 Adicionar mensagem "Perfil atualizado com sucesso." e redirecionar para `profiles:detail`.
-  - [ ] 3.4.6 Registrar a rota `/perfil/editar/` com nome `update`.
-  - [ ] 3.4.7 Criar `profiles/profile_form.html` usando `_form_field.html` para os dois forms.
+- [X] **3.4 Edição do perfil**
+  - [X] 3.4.1 Criar `ProfileForm(ModelForm)` com `phone` e `birth_date` (widget `type='date'`).
+  - [X] 3.4.2 Criar `UserNameForm(ModelForm)` com `first_name` e `last_name`.
+  - [X] 3.4.3 Criar `ProfileUpdateView(LoginRequiredMixin, UpdateView)` para o perfil, instanciando também o `UserNameForm` no `get_context_data()` e salvando ambos em `post()` quando válidos.
+  - [X] 3.4.4 Exibir o e-mail como campo somente leitura no template.
+  - [X] 3.4.5 Adicionar mensagem "Perfil atualizado com sucesso." e redirecionar para `profiles:detail`.
+  - [X] 3.4.6 Registrar a rota `/perfil/editar/` com nome `update`.
+  - [X] 3.4.7 Criar `profiles/profile_form.html` usando `_form_field.html` para os dois forms.
 
 ### Sprint 4 — Contas bancárias
 

@@ -1,0 +1,44 @@
+{% extends 'base_app.html' %}
+
+{% block title %}Editar perfil · Finanpy{% endblock %}
+
+{% block content %}
+  {% include 'components/_page_header.html' with title='Editar perfil' subtitle='Atualize seu nome, telefone e data de nascimento.' %}
+
+  <div class="card max-w-2xl">
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      {% if user_form.non_field_errors or form.non_field_errors %}
+        <div class="mb-5 space-y-1 rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-300" role="alert">
+          {% for error in user_form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+          {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+        </div>
+      {% endif %}
+
+      {% for hidden in user_form.hidden_fields %}{{ hidden }}{% endfor %}
+      {% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+        {% for field in user_form.visible_fields %}
+          {% include 'components/_form_field.html' with field=field %}
+        {% endfor %}
+
+        <div class="form-field">
+          <label for="profile-email" class="form-label">E-mail</label>
+          <input type="email" id="profile-email" value="{{ user.email }}" readonly aria-readonly="true" aria-describedby="profile-email_helptext">
+          <div id="profile-email_helptext" class="form-help">O e-mail é usado para entrar e não pode ser alterado.</div>
+        </div>
+
+        {% for field in form.visible_fields %}
+          {% include 'components/_form_field.html' with field=field %}
+        {% endfor %}
+      </div>
+
+      <div class="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+        <a href="{% url 'profiles:detail' %}" class="btn-secondary w-full sm:w-auto">Cancelar</a>
+        <button type="submit" class="btn-primary w-full sm:w-auto">Salvar</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}
