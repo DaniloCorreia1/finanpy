@@ -18,23 +18,23 @@
 
     <dl class="mt-6 grid grid-cols-1 gap-5 border-t border-slate-800 pt-6 md:grid-cols-2">
       <div>
-        <dt class="text-sm text-slate-400">Nome</dt>
+        <dt class="text-xs font-medium uppercase tracking-wide text-slate-400">Nome</dt>
         <dd class="mt-1 text-slate-100">{{ user.first_name|default:'Não informado' }}</dd>
       </div>
       <div>
-        <dt class="text-sm text-slate-400">Sobrenome</dt>
+        <dt class="text-xs font-medium uppercase tracking-wide text-slate-400">Sobrenome</dt>
         <dd class="mt-1 text-slate-100">{{ user.last_name|default:'Não informado' }}</dd>
       </div>
       <div>
-        <dt class="text-sm text-slate-400">E-mail</dt>
+        <dt class="text-xs font-medium uppercase tracking-wide text-slate-400">E-mail</dt>
         <dd class="mt-1 break-all text-slate-100">{{ user.email }}</dd>
       </div>
       <div>
-        <dt class="text-sm text-slate-400">Telefone</dt>
+        <dt class="text-xs font-medium uppercase tracking-wide text-slate-400">Telefone</dt>
         <dd class="mt-1 text-slate-100">{{ profile.phone|default:'Não informado' }}</dd>
       </div>
       <div>
-        <dt class="text-sm text-slate-400">Data de nascimento</dt>
+        <dt class="text-xs font-medium uppercase tracking-wide text-slate-400">Data de nascimento</dt>
         <dd class="mt-1 text-slate-100">{% if profile.birth_date %}{{ profile.birth_date|date:'d/m/Y' }}{% else %}Não informado{% endif %}</dd>
       </div>
     </dl>

@@ -10,7 +10,11 @@
   {% url 'categories:create' as category_create_url %}
 
   {% with month=today|date:'F'|lower year=today|date:'Y' %}
-    {% include 'components/_page_header.html' with title='Olá, '|add:user.first_name subtitle='Resumo de '|add:month|add:' de '|add:year action_url=transaction_create_url action_label='Nova transação' %}
+    {% if user.first_name %}
+      {% include 'components/_page_header.html' with title='Olá, '|add:user.first_name subtitle='Resumo de '|add:month|add:' de '|add:year action_url=transaction_create_url action_label='Nova transação' %}
+    {% else %}
+      {% include 'components/_page_header.html' with title='Olá!' subtitle='Resumo de '|add:month|add:' de '|add:year action_url=transaction_create_url action_label='Nova transação' %}
+    {% endif %}
   {% endwith %}
 
   <section class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4" aria-label="Resumo do mês">

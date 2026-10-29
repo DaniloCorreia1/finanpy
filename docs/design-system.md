@@ -67,9 +67,19 @@ Fonte **Inter** (pesos 400, 500, 600 e 700), configurada como `fontFamily.sans`.
 | Badges | `badge`, `badge-income`, `badge-expense`, `badge-neutral` |
 | Tabelas | `table` |
 | Navegação | `nav-link`, `nav-link-active` |
+| Links de texto | `link` |
 | Texto | `text-gradient`, `amount-income`, `amount-expense` |
 
-A definição completa de cada classe (`@apply`) está na seção 9.4 do [PRD.md](../PRD.md).
+A definição completa de cada classe (`@apply`) está na seção 9.4 do [PRD.md](../PRD.md). Ajustes da Sprint 8 (refinamento de acessibilidade), já aplicados em `templates/base.html`:
+
+- `nav-link` (e, por herança, `nav-link-active`) ganhou foco visível: `focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950`. No item ativo, o anel de foco (2px sólido, afastado por 2px) substitui o `ring-1 ring-violet-500/30` do estado ativo e é distinguível dele.
+- Nova classe `link`, para links dentro de texto: `rounded font-semibold text-violet-400 transition hover:text-violet-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950`.
+
+## Links de texto
+
+- Links no meio de um parágrafo (ex.: "Não tem conta? Cadastre-se") usam `link`.
+- Dentro de alertas coloridos, mantenha a cor do alerta e sublinhe: `link font-medium text-current underline underline-offset-4 hover:text-amber-200` (o foco visível vem de `link`).
+- Ações (Salvar, Cancelar, Editar...) continuam com as classes de botão.
 
 ## Botões
 
@@ -111,12 +121,13 @@ A definição completa de cada classe (`@apply`) está na seção 9.4 do [PRD.md
 | Conteúdo (dashboard) | `grid grid-cols-1 gap-6 lg:grid-cols-3` (principal `lg:col-span-2`) |
 | Cards de contas | `grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3` |
 | Container público | `mx-auto max-w-6xl px-4 md:px-6` |
-| Tabelas | `overflow-x-auto` dentro de `card p-0` |
+| Tabelas | `overflow-x-auto` dentro de `card p-0`; textos longos em `<span class="block max-w-* truncate" title="...">`; ações de linha só com ícone (`btn-sm` + `aria-label` + `title`) |
+| Filtros (transações) | `grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5` |
 
 **Área autenticada (`base_app.html`):**
 
 - **Sidebar** fixa à esquerda a partir de `lg` (`w-64 border-r border-slate-800 bg-slate-900/70`), com logo, links e card do usuário com botão Sair no rodapé.
-- **Topbar** no mobile (`lg:hidden`), com logo e botão hambúrguer que alterna a classe `hidden` da sidebar (JavaScript mínimo inline).
+- **Topbar** no mobile (`lg:hidden`), com logo e botão hambúrguer que alterna a classe `hidden` da sidebar (JavaScript mínimo inline). Ao abrir, o foco vai para o primeiro link da sidebar; `Escape` fecha e devolve o foco ao botão; `aria-expanded` e `aria-label` ("Abrir menu"/"Fechar menu") acompanham o estado.
 - **Conteúdo** com `_page_header.html` e `_messages.html`.
 
 **Site público (`base_public.html`):** logo à esquerda; à direita, `btn-ghost` "Entrar" e `btn-primary` "Cadastre-se" (ou "Ir para o dashboard" para quem está logado). Footer com "© Finanpy".

@@ -1205,31 +1205,31 @@ Critérios de aceite:
   - [X] 7.2.6 Exibir empty states de primeiros passos quando o usuário não tiver contas ou transações.
   - [X] 7.2.7 Validar a responsividade do dashboard em mobile, tablet e desktop.
 
-### Sprint 8 — Refinamento e consistência
+### Sprint 8 — Refinamento e consistência ✅
 
-- [ ] **8.1 Revisão de interface**
-  - [ ] 8.1.1 Revisar todas as telas garantindo uso exclusivo das classes e partials do design system.
-  - [ ] 8.1.2 Revisar todos os textos da interface em português brasileiro (labels, mensagens, títulos, `verbose_name`, erros).
-  - [ ] 8.1.3 Definir `{% block title %}` em todas as páginas ("Transações · Finanpy", etc.).
-  - [ ] 8.1.4 Revisar estados de foco e navegação por teclado em botões, links e inputs.
-  - [ ] 8.1.5 Revisar todas as telas em 360px, 768px e 1280px.
+- [X] **8.1 Revisão de interface**
+  - [X] 8.1.1 Revisar todas as telas garantindo uso exclusivo das classes e partials do design system.
+  - [X] 8.1.2 Revisar todos os textos da interface em português brasileiro (labels, mensagens, títulos, `verbose_name`, erros).
+  - [X] 8.1.3 Definir `{% block title %}` em todas as páginas ("Transações · Finanpy", etc.).
+  - [X] 8.1.4 Revisar estados de foco e navegação por teclado em botões, links e inputs.
+  - [X] 8.1.5 Revisar todas as telas em 360px, 768px e 1280px.
 
-- [ ] **8.2 Revisão de segurança e isolamento**
-  - [ ] 8.2.1 Conferir `LoginRequiredMixin` em todas as views privadas.
-  - [ ] 8.2.2 Conferir `UserQuerySetMixin` em todas as views de detalhe, edição e exclusão.
-  - [ ] 8.2.3 Testar manualmente o acesso a URLs de objetos de outro usuário (esperado: 404).
-  - [ ] 8.2.4 Conferir querysets filtrados nos selects de todos os forms.
+- [X] **8.2 Revisão de segurança e isolamento**
+  - [X] 8.2.1 Conferir `LoginRequiredMixin` em todas as views privadas.
+  - [X] 8.2.2 Conferir `UserQuerySetMixin` em todas as views de detalhe, edição e exclusão.
+  - [X] 8.2.3 Testar manualmente o acesso a URLs de objetos de outro usuário (esperado: 404).
+  - [X] 8.2.4 Conferir querysets filtrados nos selects de todos os forms.
 
-- [ ] **8.3 Revisão de código**
-  - [ ] 8.3.1 Executar `pycodestyle` (ou `flake8`) e corrigir violações de PEP 8.
-  - [ ] 8.3.2 Padronizar aspas simples em todo o código Python.
-  - [ ] 8.3.3 Remover imports, arquivos e código não utilizados.
-  - [ ] 8.3.4 Conferir `created_at` e `updated_at` em todos os models.
-  - [ ] 8.3.5 Executar `python manage.py check` e `makemigrations --check` sem pendências.
+- [X] **8.3 Revisão de código**
+  - [X] 8.3.1 Executar `pycodestyle` (ou `flake8`) e corrigir violações de PEP 8.
+  - [X] 8.3.2 Padronizar aspas simples em todo o código Python.
+  - [X] 8.3.3 Remover imports, arquivos e código não utilizados.
+  - [X] 8.3.4 Conferir `created_at` e `updated_at` em todos os models.
+  - [X] 8.3.5 Executar `python manage.py check` e `makemigrations --check` sem pendências.
 
-- [ ] **8.4 Roteiro de validação manual**
-  - [ ] 8.4.1 Executar o fluxo completo: cadastro → criar contas → criar categorias → registrar transações → filtrar → dashboard → editar/excluir → perfil → logout.
-  - [ ] 8.4.2 Registrar e corrigir os problemas encontrados.
+- [X] **8.4 Roteiro de validação manual**
+  - [X] 8.4.1 Executar o fluxo completo: cadastro → criar contas → criar categorias → registrar transações → filtrar → dashboard → editar/excluir → perfil → logout.
+  - [X] 8.4.2 Registrar e corrigir os problemas encontrados.
 
 ### Sprint 9 — Testes automatizados
 

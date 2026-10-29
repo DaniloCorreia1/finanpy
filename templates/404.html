@@ -1,0 +1,19 @@
+{% extends 'base_public.html' %}
+
+{% block title %}Página não encontrada · Finanpy{% endblock %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+    {% url 'dashboard' as home_url %}
+    {% firstof 'Ir para o dashboard' as home_label %}
+  {% else %}
+    {% url 'landing' as home_url %}
+    {% firstof 'Voltar para o início' as home_label %}
+  {% endif %}
+  <section class="mx-auto max-w-md px-4 py-12 md:py-20">
+    <h1 class="text-center text-2xl md:text-3xl font-semibold text-slate-100">Página não encontrada</h1>
+    <div class="mt-6">
+      {% include 'components/_empty_state.html' with message='O endereço que você acessou não existe ou não está mais disponível.' action_url=home_url action_label=home_label %}
+    </div>
+  </section>
+{% endblock %}

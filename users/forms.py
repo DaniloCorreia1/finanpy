@@ -23,6 +23,14 @@ class SignUpForm(UserCreationForm):
         self.fields['password1'].label = 'Senha'
         self.fields['password2'].label = 'Confirmar senha'
 
+    def clean_email(self):
+        email = self.cleaned_data['email'].strip().lower()
+        if User.objects.filter(email__iexact=email).exists():
+            raise forms.ValidationError(
+                'Já existe um usuário com este e-mail.', code='unique'
+            )
+        return email
+
 
 class EmailAuthenticationForm(AuthenticationForm):
     username = forms.EmailField(

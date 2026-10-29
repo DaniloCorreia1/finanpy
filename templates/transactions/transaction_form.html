@@ -11,7 +11,7 @@
   {% endif %}
 
   {% if not has_accounts or not has_categories %}
-    <div class="mb-6 max-w-2xl rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-300" role="alert">
+    <div class="mb-6 max-w-2xl rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-300" role="status">
       <p>
         {% if not has_accounts and not has_categories %}
           Para registrar uma transação, você precisa ter ao menos uma conta e uma categoria cadastradas.
@@ -23,10 +23,10 @@
       </p>
       <p class="mt-2 flex flex-col gap-1 sm:flex-row sm:gap-4">
         {% if not has_accounts %}
-          <a href="{% url 'accounts:create' %}" class="font-medium underline underline-offset-4 hover:text-amber-200">Cadastrar conta</a>
+          <a href="{% url 'accounts:create' %}" class="link font-medium text-current underline underline-offset-4 hover:text-amber-200">Cadastrar conta</a>
         {% endif %}
         {% if not has_categories %}
-          <a href="{% url 'categories:create' %}" class="font-medium underline underline-offset-4 hover:text-amber-200">Cadastrar categoria</a>
+          <a href="{% url 'categories:create' %}" class="link font-medium text-current underline underline-offset-4 hover:text-amber-200">Cadastrar categoria</a>
         {% endif %}
       </p>
     </div>
