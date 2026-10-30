@@ -1293,7 +1293,7 @@ Critérios de aceite:
   - [X] 10.3.1 Criar `README.md` com descrição, stack, como rodar localmente, como rodar com Docker e como executar os testes.
   - [X] 10.3.2 Atualizar este PRD marcando as tarefas concluídas.
 
-### Sprint 11 — Agente de IA Financeiro
+### Sprint 11 — Agente de IA Financeiro ✅
 
 > Especificação completa na **seção 14**. Sprint conduzida pelo agente `langchain-ai-specialist` (código da app `ai`), com `django-frontend` no card do dashboard, `qa-tester` nos testes e validação e `code-reviewer` na revisão. Toda a lógica fica na app `ai`; fora dela só mudam `core/settings.py`, `core/urls.py`, `core/views.py`, `templates/core/dashboard.html`, `requirements.txt`, `.env.example`, `docker-compose.yml` e a documentação.
 
@@ -1363,10 +1363,10 @@ Critérios de aceite:
   - [X] 11.10.5 Testar o dashboard (três estados do card) e a `GenerateInsightView` (login obrigatório, somente POST, cooldown, mensagens e falha da API sem erro 500).
   - [X] 11.10.6 Garantir que nenhum teste acessa a rede (sem `OPENAI_API_KEY` real) e executar `python manage.py test` com todos os testes passando.
 
-- [ ] **11.11 Documentação e validação**
+- [X] **11.11 Documentação e validação**
   - [X] 11.11.1 Atualizar `README.md` com a configuração da OpenAI, o comando `generate_financial_insights` e o agendamento sugerido.
   - [X] 11.11.2 Atualizar `docs/regras-de-negocio.md` (mensagens), `docs/modelo-de-dados.md` (`FinancialInsight`) e `docs/estrutura-do-projeto.md` (app `ai` e rota `ai:generate`).
-  - [ ] 11.11.3 Validar no navegador os três estados do card em 360px, 768px e 1280px e uma geração real com chave válida.
+  - [X] 11.11.3 Validar no navegador os três estados do card em 360px, 768px e 1280px e uma geração real com chave válida.
   - [X] 11.11.4 Executar `pycodestyle`, `python manage.py check` e `makemigrations --check` sem pendências.
 
 ---
