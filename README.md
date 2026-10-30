@@ -7,6 +7,8 @@ O sistema tem duas áreas:
 - **Site público**: landing page com as opções **Cadastre-se** e **Entrar**;
 - **Área autenticada**: dashboard, contas bancárias, categorias, transações (com filtros e paginação) e perfil do usuário. O login é feito com **e-mail e senha**.
 
+O dashboard também mostra uma **análise financeira gerada por IA** (resumo, insights e dicas sobre os últimos três meses), produzida por um agente LangChain com a OpenAI.
+
 Os requisitos estão no [PRD.md](PRD.md) e a documentação derivada em [docs/](docs/README.md).
 
 ## Stack
@@ -19,6 +21,7 @@ Os requisitos estão no [PRD.md](PRD.md) e a documentação derivada em [docs/](
 | Estilização | TailwindCSS v3 via CDN, com o design system no `templates/base.html` |
 | Banco de dados | SQLite (`db.sqlite`) |
 | Autenticação | `django.contrib.auth` com `User` customizado (login por e-mail) |
+| IA | LangChain 1.x (`langchain`, `langchain-openai`) com OpenAI `gpt-5-mini` |
 | Testes | `django.test` (`TestCase`) |
 | Containerização | Docker + docker compose |
 
@@ -61,6 +64,12 @@ As configurações sensíveis são lidas de variáveis de ambiente em `core/sett
 | `DEBUG` | `True` | Modo de depuração. Aceita `True`/`False` ou `1`/`0`. |
 | `ALLOWED_HOSTS` | `localhost,127.0.0.1` | Hosts aceitos, separados por vírgula. |
 | `SQLITE_PATH` | `db.sqlite` na raiz do projeto | Caminho do banco SQLite. No Docker aponta para o volume. |
+| `OPENAI_API_KEY` | vazio | Chave da OpenAI. Vazia desabilita a geração de análises. |
+| `AI_MODEL_NAME` | `gpt-5-mini` | Modelo usado pelo agente. |
+| `AI_REQUEST_TIMEOUT` | `60` | Timeout, em segundos, de cada chamada ao modelo. |
+| `AI_MAX_COMPLETION_TOKENS` | `4000` | Limite de tokens de saída por chamada. |
+| `AI_MIN_TRANSACTIONS` | `5` | Mínimo de transações no período para chamar a IA. |
+| `AI_MANUAL_COOLDOWN_MINUTES` | `60` | Intervalo mínimo entre pedidos pelo botão do dashboard. |
 
 Localmente, o Django **não** lê o arquivo `.env`; defina as variáveis no terminal antes de rodar o servidor:
 
@@ -77,6 +86,63 @@ DEBUG=False ALLOWED_HOSTS=localhost,127.0.0.1 python manage.py runserver
 ```
 
 > Com `DEBUG=False`, o `runserver` deixa de servir arquivos estáticos (por exemplo, o CSS do admin). As telas da aplicação usam o Tailwind via CDN e não são afetadas.
+
+## Análise financeira com IA
+
+A app `ai` usa um agente LangChain 1.x com a OpenAI (`gpt-5-mini`) para analisar os lançamentos dos últimos três meses de cada usuário (do 1º dia do mês de dois meses atrás até hoje) e gravar resumo, insights e dicas na tabela `FinancialInsight`. O dashboard mostra a análise mais recente e nunca chama a IA.
+
+- O agente só lê dados agregados do próprio usuário (tools somente leitura); nome, e-mail, telefone, descrições de transações e nomes de contas ou bancos não são enviados à OpenAI.
+- Usuários com menos de `AI_MIN_TRANSACTIONS` transações no período recebem um aviso de dados insuficientes, sem chamada à IA.
+- Falhas da API não gravam análise e aparecem no log `ai` (sem dados financeiros nem a chave).
+
+### Configurando a OpenAI
+
+Crie uma chave em <https://platform.openai.com/api-keys> e defina `OPENAI_API_KEY` no ambiente (ou no `.env`, com Docker). Sem a chave, a aplicação funciona normalmente, mas o botão **Gerar nova análise** fica oculto e o command encerra com erro.
+
+```powershell
+# PowerShell
+$env:OPENAI_API_KEY = 'sk-...'
+python manage.py runserver
+```
+
+```bash
+# bash
+export OPENAI_API_KEY='sk-...'
+python manage.py runserver
+```
+
+### Gerando as análises
+
+```bash
+python manage.py generate_financial_insights                         # todos os usuários ativos
+python manage.py generate_financial_insights --user ana@example.com  # um único usuário
+```
+
+O command processa um usuário por vez (a falha de um não interrompe os demais) e termina com o resumo: análises geradas, dados insuficientes, sem mudança e falhas (identificadas pelo `id` do usuário). O usuário também pode pedir uma nova análise pelo botão **Gerar nova análise** do dashboard, respeitando o intervalo de `AI_MANUAL_COOLDOWN_MINUTES`. O controle desse intervalo usa o cache local do Django (em memória, por processo): ele é zerado quando o servidor reinicia e não é compartilhado entre processos.
+
+### Agendamento sugerido
+
+Semanal, às segundas-feiras às 06:00 (`America/Sao_Paulo`). A análise cobre três meses, então a frequência semanal equilibra custo e utilidade.
+
+- **Linux/macOS (cron)**, com `crontab -e` (a variável `OPENAI_API_KEY` precisa estar disponível para o cron):
+
+  ```cron
+  0 6 * * 1 cd /caminho/finanpy && .venv/bin/python manage.py generate_financial_insights >> insights.log 2>&1
+  ```
+
+- **Windows (Agendador de Tarefas)**:
+
+  ```powershell
+  schtasks /Create /SC WEEKLY /D MON /ST 06:00 /TN "Finanpy - analises de IA" /TR "C:\caminho\finanpy\.venv\Scripts\python.exe C:\caminho\finanpy\manage.py generate_financial_insights"
+  ```
+
+  A variável `OPENAI_API_KEY` precisa estar definida para o usuário que executa a tarefa (por exemplo, com `setx OPENAI_API_KEY "sk-..."`).
+
+- **Docker**, agendando no host o comando:
+
+  ```bash
+  docker compose run --rm web python manage.py generate_financial_insights
+  ```
 
 ## Rodando com Docker
 
@@ -104,7 +170,7 @@ docker compose down -v                                    # remove também o vol
 
 ## Testes
 
-Os testes usam `django.test.TestCase` e ficam no `tests.py` de cada app.
+Os testes usam `django.test.TestCase` e ficam no `tests.py` de cada app (na app `ai`, no pacote `ai/tests/`). Os testes da IA usam o LLM mockado: não acessam a rede nem precisam de `OPENAI_API_KEY`.
 
 ```bash
 python manage.py test                                              # todos os testes
@@ -116,7 +182,7 @@ Cobertura (o `coverage` não faz parte do `requirements.txt`; instale-o no venv)
 
 ```bash
 pip install coverage
-coverage run --source=. --omit=".venv/*,*/migrations/*,*/tests.py,manage.py,core/asgi.py,core/wsgi.py" manage.py test
+coverage run --source=. --omit=".venv/*,*/migrations/*,*/tests.py,*/tests/*,manage.py,core/asgi.py,core/wsgi.py" manage.py test
 coverage report
 ```
 
@@ -138,6 +204,7 @@ finanpy
 ├── accounts        # contas bancárias e cálculo de saldo
 ├── categories      # categorias de entrada e saída
 ├── transactions    # transações, filtros e paginação
+├── ai              # agente de IA financeiro (LangChain + OpenAI)
 ├── templates       # layouts, design system e partials (components/)
 ├── docs            # documentação do projeto
 ├── Dockerfile

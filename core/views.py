@@ -1,11 +1,13 @@
 from decimal import Decimal
 
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q, Sum
 from django.utils import timezone
 from django.views.generic import TemplateView
 
 from accounts.models import Account
+from ai.services import get_latest_insight
 from transactions.models import Transaction
 
 
@@ -56,5 +58,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
             'month_expense': month_expense,
             'month_result': month_income - month_expense,
             'recent_transactions': recent_transactions,
+            'latest_insight': get_latest_insight(user),
+            'ai_enabled': bool(settings.OPENAI_API_KEY),
         })
         return context

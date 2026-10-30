@@ -16,6 +16,14 @@ services:
       DEBUG: ${DEBUG:-True}
       ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1}
       SQLITE_PATH: /app/data/db.sqlite
+      # Agente de IA (seção 14.12 do PRD). Sem OPENAI_API_KEY a geração
+      # fica desabilitada.
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      AI_MODEL_NAME: ${AI_MODEL_NAME:-gpt-5-mini}
+      AI_REQUEST_TIMEOUT: ${AI_REQUEST_TIMEOUT:-60}
+      AI_MAX_COMPLETION_TOKENS: ${AI_MAX_COMPLETION_TOKENS:-4000}
+      AI_MIN_TRANSACTIONS: ${AI_MIN_TRANSACTIONS:-5}
+      AI_MANUAL_COOLDOWN_MINUTES: ${AI_MANUAL_COOLDOWN_MINUTES:-60}
     volumes:
       # Persiste o db.sqlite entre reinicializações e recriações do container.
       - sqlite_data:/app/data

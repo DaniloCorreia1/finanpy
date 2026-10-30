@@ -10,6 +10,7 @@ erDiagram
     USER ||--o{ TRANSACTION : registra
     ACCOUNT ||--o{ TRANSACTION : movimenta
     CATEGORY ||--o{ TRANSACTION : classifica
+    USER ||--o{ FINANCIAL_INSIGHT : recebe
 ```
 
 Todos os models têm `created_at` (`auto_now_add=True`) e `updated_at` (`auto_now=True`).
@@ -81,6 +82,23 @@ Choices: `checking` → Conta corrente, `savings` → Poupança, `wallet` → Ca
 | `date` | `DateField` | |
 
 `ordering = ['-date', '-created_at']`.
+
+## FinancialInsight (`ai`)
+
+Análise financeira gerada pelo agente de IA (seção 14.7 do PRD). Os registros nunca são editados pela aplicação: cada geração cria um novo registro (histórico).
+
+| Campo | Tipo | Observação |
+|---|---|---|
+| `user` | `ForeignKey` | `CASCADE`, `related_name='financial_insights'` |
+| `status` | `CharField` (choices) | `COMPLETED = 'completed'` ("Concluída") e `INSUFFICIENT_DATA = 'insufficient_data'` ("Dados insuficientes"); falhas não são gravadas |
+| `summary` | `TextField` | Resumo da análise ou mensagem padrão de dados insuficientes |
+| `insights` | `JSONField(default=list)` | Lista de `{'title': str, 'description': str}` |
+| `tips` | `JSONField(default=list)` | Mesma estrutura de `insights` |
+| `period_start` / `period_end` | `DateField` | Janela analisada, definida pelo service (não pelo modelo de IA) |
+| `model_name` | `CharField(max_length=50, blank=True)` | Modelo usado (ex.: `gpt-5-mini`); vazio em `insufficient_data` |
+| `input_tokens` / `output_tokens` | `PositiveIntegerField(null=True, blank=True)` | Soma do `usage_metadata` das respostas do modelo |
+
+`ordering = ['-created_at']`, índice `ai_insight_user_created_idx` em `(user, -created_at)` (consulta do dashboard). No admin é somente leitura.
 
 ## Regras de integridade
 

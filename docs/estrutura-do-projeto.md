@@ -14,6 +14,20 @@ finanpy
 │   ├── tests.py
 │   ├── urls.py
 │   └── views.py
+├── ai                  # agente de IA financeiro (seção 14 do PRD)
+│   ├── management/commands/generate_financial_insights.py
+│   ├── migrations/
+│   ├── tests/          # test_tools, test_services, test_commands, test_views
+│   ├── admin.py        # FinancialInsight (somente leitura)
+│   ├── agent.py        # build_model() e build_agent(): ChatOpenAI + create_agent
+│   ├── apps.py
+│   ├── models.py       # FinancialInsight
+│   ├── prompts.py      # SYSTEM_PROMPT e build_user_message()
+│   ├── schemas.py      # AnalysisContext e FinancialAnalysis
+│   ├── services.py     # período, dados mínimos, geração, erros, get_latest_insight()
+│   ├── tools.py        # tools somente leitura + FINANCIAL_TOOLS
+│   ├── urls.py
+│   └── views.py        # GenerateInsightView (POST)
 ├── categories          # categorias (mesma estrutura de accounts)
 ├── core                # configurações globais
 │   ├── asgi.py
@@ -34,6 +48,7 @@ finanpy
 │   ├── users/                  # login.html, signup.html
 │   ├── profiles/
 │   ├── accounts/
+│   ├── ai/                     # _insight_card.html (card do dashboard)
 │   ├── categories/
 │   └── transactions/
 ├── docs/
@@ -53,6 +68,7 @@ finanpy
 | `accounts` | Contas bancárias e cálculo de saldo |
 | `categories` | Categorias de entrada e saída |
 | `transactions` | Transações, filtros e paginação |
+| `ai` | Agente de IA financeiro (LangChain + OpenAI): `FinancialInsight`, tools de leitura, service de geração, command `generate_financial_insights` e `GenerateInsightView` |
 
 O `core` concentra as duas views transversais (landing e dashboard), para não criar uma app só para isso.
 
@@ -102,6 +118,7 @@ URLs em português; nomes de rota com namespace (`app_name`) em inglês.
 | `/transacoes/nova/` | `TransactionCreateView` | `transactions:create` | Autenticado |
 | `/transacoes/<pk>/editar/` | `TransactionUpdateView` | `transactions:update` | Autenticado |
 | `/transacoes/<pk>/excluir/` | `TransactionDeleteView` | `transactions:delete` | Autenticado |
+| `/ia/analises/gerar/` | `GenerateInsightView` (somente POST) | `ai:generate` | Autenticado |
 | `/admin/` | Django Admin | — | Superusuário |
 
 ## Configurações principais (`core/settings.py`)
@@ -114,6 +131,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'categories.apps.CategoriesConfig',
     'transactions.apps.TransactionsConfig',
+    'ai.apps.AiConfig',
 ]
 
 AUTH_USER_MODEL = 'users.User'
@@ -130,6 +148,16 @@ DATABASES['default']['NAME'] = BASE_DIR / 'db.sqlite'
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'landing'
+
+# Agente de IA (lidos com os.environ.get(); seção 14.12 do PRD)
+OPENAI_API_KEY = ''                 # vazia desabilita a geração
+AI_MODEL_NAME = 'gpt-5-mini'
+AI_REQUEST_TIMEOUT = 60
+AI_MAX_COMPLETION_TOKENS = 4000
+AI_MIN_TRANSACTIONS = 5
+AI_MANUAL_COOLDOWN_MINUTES = 60
+
+LOGGING = {...}                     # logger 'ai' (INFO, console)
 ```
 
 Cada `AppConfig` define `verbose_name` em português (ex.: `verbose_name = 'Usuários'`).

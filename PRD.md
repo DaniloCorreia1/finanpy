@@ -1297,77 +1297,77 @@ Critérios de aceite:
 
 > Especificação completa na **seção 14**. Sprint conduzida pelo agente `langchain-ai-specialist` (código da app `ai`), com `django-frontend` no card do dashboard, `qa-tester` nos testes e validação e `code-reviewer` na revisão. Toda a lógica fica na app `ai`; fora dela só mudam `core/settings.py`, `core/urls.py`, `core/views.py`, `templates/core/dashboard.html`, `requirements.txt`, `.env.example`, `docker-compose.yml` e a documentação.
 
-- [ ] **11.1 Setup e dependências**
-  - [ ] 11.1.1 Consultar no context7 a documentação atual de `langchain` 1.x e `langchain-openai` (`create_agent`, `@tool`, `ToolRuntime`, `response_format`, middleware, `ChatOpenAI`) antes de escrever código.
-  - [ ] 11.1.2 Instalar `langchain>=1.0,<2.0` e `langchain-openai>=1.0,<2.0` no venv e fixar as versões instaladas em `requirements.txt` (mantendo o arquivo em UTF-8).
-  - [ ] 11.1.3 Registrar a app como `'ai.apps.AiConfig'` em `INSTALLED_APPS` (`core/settings.py`) e definir `verbose_name = 'Inteligência artificial'` em `ai/apps.py`.
-  - [ ] 11.1.4 Adicionar em `core/settings.py` as configurações `OPENAI_API_KEY`, `AI_MODEL_NAME`, `AI_REQUEST_TIMEOUT`, `AI_MAX_COMPLETION_TOKENS`, `AI_MIN_TRANSACTIONS` e `AI_MANUAL_COOLDOWN_MINUTES`, lidas com `os.environ.get()` e os padrões da seção 14.12.
-  - [ ] 11.1.5 Configurar `LOGGING` em `core/settings.py` com o logger `ai` (nível `INFO`, saída no console).
-  - [ ] 11.1.6 Documentar as novas variáveis em `.env.example` e repassá-las ao serviço `web` no `docker-compose.yml`.
+- [X] **11.1 Setup e dependências**
+  - [X] 11.1.1 Consultar no context7 a documentação atual de `langchain` 1.x e `langchain-openai` (`create_agent`, `@tool`, `ToolRuntime`, `response_format`, middleware, `ChatOpenAI`) antes de escrever código.
+  - [X] 11.1.2 Instalar `langchain>=1.0,<2.0` e `langchain-openai>=1.0,<2.0` no venv e fixar as versões instaladas em `requirements.txt` (mantendo o arquivo em UTF-8).
+  - [X] 11.1.3 Registrar a app como `'ai.apps.AiConfig'` em `INSTALLED_APPS` (`core/settings.py`) e definir `verbose_name = 'Inteligência artificial'` em `ai/apps.py`.
+  - [X] 11.1.4 Adicionar em `core/settings.py` as configurações `OPENAI_API_KEY`, `AI_MODEL_NAME`, `AI_REQUEST_TIMEOUT`, `AI_MAX_COMPLETION_TOKENS`, `AI_MIN_TRANSACTIONS` e `AI_MANUAL_COOLDOWN_MINUTES`, lidas com `os.environ.get()` e os padrões da seção 14.12.
+  - [X] 11.1.5 Configurar `LOGGING` em `core/settings.py` com o logger `ai` (nível `INFO`, saída no console).
+  - [X] 11.1.6 Documentar as novas variáveis em `.env.example` e repassá-las ao serviço `web` no `docker-compose.yml`.
 
-- [ ] **11.2 Model e migração**
-  - [ ] 11.2.1 Criar `FinancialInsight` em `ai/models.py` com `user`, `status`, `summary`, `insights`, `tips`, `period_start`, `period_end`, `model_name`, `input_tokens`, `output_tokens`, `created_at` e `updated_at` (seção 14.7).
-  - [ ] 11.2.2 Definir as choices de status como constantes (`COMPLETED`, `INSUFFICIENT_DATA`), `Meta.ordering = ['-created_at']`, o índice `(user, -created_at)`, `verbose_name` em português e `__str__`.
-  - [ ] 11.2.3 Gerar e aplicar a migração (`python manage.py makemigrations ai` e `migrate`).
-  - [ ] 11.2.4 Registrar no admin (`ai/admin.py`) com `list_display`, `list_filter = ['status', 'model_name']`, `search_fields = ['user__email']` e campos somente leitura.
+- [X] **11.2 Model e migração**
+  - [X] 11.2.1 Criar `FinancialInsight` em `ai/models.py` com `user`, `status`, `summary`, `insights`, `tips`, `period_start`, `period_end`, `model_name`, `input_tokens`, `output_tokens`, `created_at` e `updated_at` (seção 14.7).
+  - [X] 11.2.2 Definir as choices de status como constantes (`COMPLETED`, `INSUFFICIENT_DATA`), `Meta.ordering = ['-created_at']`, o índice `(user, -created_at)`, `verbose_name` em português e `__str__`.
+  - [X] 11.2.3 Gerar e aplicar a migração (`python manage.py makemigrations ai` e `migrate`).
+  - [X] 11.2.4 Registrar no admin (`ai/admin.py`) com `list_display`, `list_filter = ['status', 'model_name']`, `search_fields = ['user__email']` e campos somente leitura.
 
-- [ ] **11.3 Schemas**
-  - [ ] 11.3.1 Criar `AnalysisContext` (dataclass com `user_id`, `period_start` e `period_end`) em `ai/schemas.py`.
-  - [ ] 11.3.2 Criar os modelos Pydantic `InsightItem` e `FinancialAnalysis` em `ai/schemas.py` (seção 14.9).
+- [X] **11.3 Schemas**
+  - [X] 11.3.1 Criar `AnalysisContext` (dataclass com `user_id`, `period_start` e `period_end`) em `ai/schemas.py`.
+  - [X] 11.3.2 Criar os modelos Pydantic `InsightItem` e `FinancialAnalysis` em `ai/schemas.py` (seção 14.9).
 
-- [ ] **11.4 Tools de leitura**
-  - [ ] 11.4.1 Criar em `ai/tools.py` os helpers internos de limitação de datas à janela do contexto e de serialização de `Decimal` em texto com duas casas.
-  - [ ] 11.4.2 Implementar a tool `get_financial_summary` (seção 14.8).
-  - [ ] 11.4.3 Implementar a tool `get_spending_by_category`.
-  - [ ] 11.4.4 Implementar a tool `get_top_expenses`.
-  - [ ] 11.4.5 Implementar a tool `get_monthly_evolution`.
-  - [ ] 11.4.6 Implementar a tool `get_accounts_overview`.
-  - [ ] 11.4.7 Exportar a lista `FINANCIAL_TOOLS` e conferir que nenhum schema de tool expõe `user_id` ou `runtime` ao modelo.
+- [X] **11.4 Tools de leitura**
+  - [X] 11.4.1 Criar em `ai/tools.py` os helpers internos de limitação de datas à janela do contexto e de serialização de `Decimal` em texto com duas casas.
+  - [X] 11.4.2 Implementar a tool `get_financial_summary` (seção 14.8).
+  - [X] 11.4.3 Implementar a tool `get_spending_by_category`.
+  - [X] 11.4.4 Implementar a tool `get_top_expenses`.
+  - [X] 11.4.5 Implementar a tool `get_monthly_evolution`.
+  - [X] 11.4.6 Implementar a tool `get_accounts_overview`.
+  - [X] 11.4.7 Exportar a lista `FINANCIAL_TOOLS` e conferir que nenhum schema de tool expõe `user_id` ou `runtime` ao modelo.
 
-- [ ] **11.5 Prompt**
-  - [ ] 11.5.1 Escrever `SYSTEM_PROMPT` em `ai/prompts.py` seguindo a seção 14.10 (papel, idioma, moeda, tom, limites, tamanho e defesa contra instruções vindas dos dados).
-  - [ ] 11.5.2 Criar `build_user_message(period_start, period_end)` em `ai/prompts.py`, gerando o pedido de análise com o período em `dd/mm/aaaa`.
+- [X] **11.5 Prompt**
+  - [X] 11.5.1 Escrever `SYSTEM_PROMPT` em `ai/prompts.py` seguindo a seção 14.10 (papel, idioma, moeda, tom, limites, tamanho e defesa contra instruções vindas dos dados).
+  - [X] 11.5.2 Criar `build_user_message(period_start, period_end)` em `ai/prompts.py`, gerando o pedido de análise com o período em `dd/mm/aaaa`.
 
-- [ ] **11.6 Agente**
-  - [ ] 11.6.1 Criar `build_model()` em `ai/agent.py` com `ChatOpenAI` (`model=settings.AI_MODEL_NAME`, `timeout`, `max_retries=2`, `max_completion_tokens` e `reasoning_effort='low'`).
-  - [ ] 11.6.2 Criar `build_agent()` em `ai/agent.py` com `create_agent` (`tools=FINANCIAL_TOOLS`, `system_prompt`, `response_format=FinancialAnalysis`, `context_schema=AnalysisContext`).
-  - [ ] 11.6.3 Adicionar o middleware de limites: `ModelCallLimitMiddleware(run_limit=8, exit_behavior='end')` e `ToolCallLimitMiddleware(run_limit=10, exit_behavior='continue')`.
+- [X] **11.6 Agente**
+  - [X] 11.6.1 Criar `build_model()` em `ai/agent.py` com `ChatOpenAI` (`model=settings.AI_MODEL_NAME`, `timeout`, `max_retries=2`, `max_completion_tokens` e `reasoning_effort='low'`).
+  - [X] 11.6.2 Criar `build_agent()` em `ai/agent.py` com `create_agent` (`tools=FINANCIAL_TOOLS`, `system_prompt`, `response_format=FinancialAnalysis`, `context_schema=AnalysisContext`).
+  - [X] 11.6.3 Adicionar o middleware de limites: `ModelCallLimitMiddleware(run_limit=8, exit_behavior='end')` e `ToolCallLimitMiddleware(run_limit=10, exit_behavior='continue')`.
 
-- [ ] **11.7 Service de geração e gravação**
-  - [ ] 11.7.1 Criar `get_analysis_period(today)` em `ai/services.py` (1º dia do mês de dois meses atrás até hoje).
-  - [ ] 11.7.2 Criar a verificação de dados mínimos (`AI_MIN_TRANSACTIONS` transações no período) em `ai/services.py`.
-  - [ ] 11.7.3 Implementar o caminho de dados insuficientes: gravar `FinancialInsight` com status `insufficient_data` e mensagem padrão, sem chamar o LLM e sem duplicar quando o último registro do usuário já for `insufficient_data`.
-  - [ ] 11.7.4 Implementar `generate_insight_for_user(user)`: montar o contexto, invocar o agente com `context=` e `recursion_limit`, ler `structured_response`, somar o uso de tokens e gravar a análise `completed`.
-  - [ ] 11.7.5 Implementar o tratamento de erros da seção 14.11 (timeout, rate limit, erro da API, saída estruturada inválida, chave ausente): log sem dados financeiros, nenhum registro gravado e retorno de um resultado de falha.
-  - [ ] 11.7.6 Criar `get_latest_insight(user)` em `ai/services.py` para o dashboard.
+- [X] **11.7 Service de geração e gravação**
+  - [X] 11.7.1 Criar `get_analysis_period(today)` em `ai/services.py` (1º dia do mês de dois meses atrás até hoje).
+  - [X] 11.7.2 Criar a verificação de dados mínimos (`AI_MIN_TRANSACTIONS` transações no período) em `ai/services.py`.
+  - [X] 11.7.3 Implementar o caminho de dados insuficientes: gravar `FinancialInsight` com status `insufficient_data` e mensagem padrão, sem chamar o LLM e sem duplicar quando o último registro do usuário já for `insufficient_data`.
+  - [X] 11.7.4 Implementar `generate_insight_for_user(user)`: montar o contexto, invocar o agente com `context=` e `recursion_limit`, ler `structured_response`, somar o uso de tokens e gravar a análise `completed`.
+  - [X] 11.7.5 Implementar o tratamento de erros da seção 14.11 (timeout, rate limit, erro da API, saída estruturada inválida, chave ausente): log sem dados financeiros, nenhum registro gravado e retorno de um resultado de falha.
+  - [X] 11.7.6 Criar `get_latest_insight(user)` em `ai/services.py` para o dashboard.
 
-- [ ] **11.8 Management command**
-  - [ ] 11.8.1 Criar `ai/management/commands/generate_financial_insights.py` processando todos os usuários ativos, um por vez.
-  - [ ] 11.8.2 Adicionar a opção `--user <e-mail>` para gerar a análise de um único usuário.
-  - [ ] 11.8.3 Encerrar com `CommandError` quando `OPENAI_API_KEY` não estiver configurada.
-  - [ ] 11.8.4 Exibir ao final o resumo: geradas, dados insuficientes, sem mudança e falhas (identificando usuários pelo `id`, sem e-mail).
+- [X] **11.8 Management command**
+  - [X] 11.8.1 Criar `ai/management/commands/generate_financial_insights.py` processando todos os usuários ativos, um por vez.
+  - [X] 11.8.2 Adicionar a opção `--user <e-mail>` para gerar a análise de um único usuário.
+  - [X] 11.8.3 Encerrar com `CommandError` quando `OPENAI_API_KEY` não estiver configurada.
+  - [X] 11.8.4 Exibir ao final o resumo: geradas, dados insuficientes, sem mudança e falhas (identificando usuários pelo `id`, sem e-mail).
 
-- [ ] **11.9 Integração com o dashboard**
-  - [ ] 11.9.1 Incluir `latest_insight` e `ai_enabled` no contexto de `DashboardView` (`core/views.py`), usando `get_latest_insight()`.
-  - [ ] 11.9.2 Criar `GenerateInsightView(LoginRequiredMixin, View)` em `ai/views.py`, aceitando somente POST, com cooldown por usuário via cache (`AI_MANUAL_COOLDOWN_MINUTES`) e as mensagens da seção 14.10.
-  - [ ] 11.9.3 Criar `ai/urls.py` (`app_name = 'ai'`, rota `analises/gerar/` com nome `generate`) e incluí-lo em `core/urls.py` sob `ia/`.
-  - [ ] 11.9.4 Criar `templates/ai/_insight_card.html` com os estados "sem análise", "dados insuficientes" e "análise concluída" (seção 14.10), usando apenas o design system.
-  - [ ] 11.9.5 Incluir o partial em `templates/core/dashboard.html`, logo abaixo dos stat cards.
-  - [ ] 11.9.6 Desabilitar o botão "Gerar nova análise" durante o envio do form (JavaScript mínimo inline) e ocultá-lo quando `ai_enabled` for falso.
+- [X] **11.9 Integração com o dashboard**
+  - [X] 11.9.1 Incluir `latest_insight` e `ai_enabled` no contexto de `DashboardView` (`core/views.py`), usando `get_latest_insight()`.
+  - [X] 11.9.2 Criar `GenerateInsightView(LoginRequiredMixin, View)` em `ai/views.py`, aceitando somente POST, com cooldown por usuário via cache (`AI_MANUAL_COOLDOWN_MINUTES`) e as mensagens da seção 14.10.
+  - [X] 11.9.3 Criar `ai/urls.py` (`app_name = 'ai'`, rota `analises/gerar/` com nome `generate`) e incluí-lo em `core/urls.py` sob `ia/`.
+  - [X] 11.9.4 Criar `templates/ai/_insight_card.html` com os estados "sem análise", "dados insuficientes" e "análise concluída" (seção 14.10), usando apenas o design system.
+  - [X] 11.9.5 Incluir o partial em `templates/core/dashboard.html`, logo abaixo dos stat cards.
+  - [X] 11.9.6 Desabilitar o botão "Gerar nova análise" durante o envio do form (JavaScript mínimo inline) e ocultá-lo quando `ai_enabled` for falso.
 
-- [ ] **11.10 Testes (com o LLM mockado)**
-  - [ ] 11.10.1 Substituir `ai/tests.py` pelo pacote `ai/tests/` (`__init__.py`, `test_tools.py`, `test_services.py`, `test_commands.py`, `test_views.py`).
-  - [ ] 11.10.2 Testar cada tool: valores agregados corretos, isolamento entre usuários, limitação à janela do período e ausência de `user_id` no schema exposto ao modelo.
-  - [ ] 11.10.3 Testar o service com o agente mockado: gravação `completed`, dados insuficientes (com e sem duplicação), cada tipo de falha sem gravar registro e histórico preservado.
-  - [ ] 11.10.4 Testar o command: todos os usuários, `--user`, usuário inexistente, chave ausente e resumo final.
-  - [ ] 11.10.5 Testar o dashboard (três estados do card) e a `GenerateInsightView` (login obrigatório, somente POST, cooldown, mensagens e falha da API sem erro 500).
-  - [ ] 11.10.6 Garantir que nenhum teste acessa a rede (sem `OPENAI_API_KEY` real) e executar `python manage.py test` com todos os testes passando.
+- [X] **11.10 Testes (com o LLM mockado)**
+  - [X] 11.10.1 Substituir `ai/tests.py` pelo pacote `ai/tests/` (`__init__.py`, `test_tools.py`, `test_services.py`, `test_commands.py`, `test_views.py`).
+  - [X] 11.10.2 Testar cada tool: valores agregados corretos, isolamento entre usuários, limitação à janela do período e ausência de `user_id` no schema exposto ao modelo.
+  - [X] 11.10.3 Testar o service com o agente mockado: gravação `completed`, dados insuficientes (com e sem duplicação), cada tipo de falha sem gravar registro e histórico preservado.
+  - [X] 11.10.4 Testar o command: todos os usuários, `--user`, usuário inexistente, chave ausente e resumo final.
+  - [X] 11.10.5 Testar o dashboard (três estados do card) e a `GenerateInsightView` (login obrigatório, somente POST, cooldown, mensagens e falha da API sem erro 500).
+  - [X] 11.10.6 Garantir que nenhum teste acessa a rede (sem `OPENAI_API_KEY` real) e executar `python manage.py test` com todos os testes passando.
 
 - [ ] **11.11 Documentação e validação**
-  - [ ] 11.11.1 Atualizar `README.md` com a configuração da OpenAI, o comando `generate_financial_insights` e o agendamento sugerido.
-  - [ ] 11.11.2 Atualizar `docs/regras-de-negocio.md` (mensagens), `docs/modelo-de-dados.md` (`FinancialInsight`) e `docs/estrutura-do-projeto.md` (app `ai` e rota `ai:generate`).
+  - [X] 11.11.1 Atualizar `README.md` com a configuração da OpenAI, o comando `generate_financial_insights` e o agendamento sugerido.
+  - [X] 11.11.2 Atualizar `docs/regras-de-negocio.md` (mensagens), `docs/modelo-de-dados.md` (`FinancialInsight`) e `docs/estrutura-do-projeto.md` (app `ai` e rota `ai:generate`).
   - [ ] 11.11.3 Validar no navegador os três estados do card em 360px, 768px e 1280px e uma geração real com chave válida.
-  - [ ] 11.11.4 Executar `pycodestyle`, `python manage.py check` e `makemigrations --check` sem pendências.
+  - [X] 11.11.4 Executar `pycodestyle`, `python manage.py check` e `makemigrations --check` sem pendências.
 
 ---
 
@@ -1475,7 +1475,7 @@ Fluxo de uma execução:
 
 1. O gatilho (command ou `GenerateInsightView`) chama `generate_insight_for_user(user)`.
 2. O service calcula o período (RF-42) e conta as transações do usuário. Se forem insuficientes, grava o registro padrão e encerra.
-3. O service monta `AnalysisContext(user_id, period_start, period_end)` e chama `agent.invoke(..., context=context, config={'recursion_limit': 25})`.
+3. O service monta `AnalysisContext(user_id, period_start, period_end)` e chama `agent.invoke(..., context=context, config={'recursion_limit': 50})`.
 4. O agente chama as tools; cada tool lê `runtime.context.user_id` e o período, consulta o ORM e devolve agregados.
 5. O agente responde com a saída estruturada `FinancialAnalysis` (`result['structured_response']`).
 6. O service valida a resposta, soma o uso de tokens e grava `FinancialInsight` com status `completed`.
@@ -1709,7 +1709,7 @@ A mensagem do usuário é gerada por `build_user_message()`: "Analise minhas fin
 **Custos e limites** (em `ai/agent.py`):
 
 - `ModelCallLimitMiddleware(run_limit=8, exit_behavior='end')` e `ToolCallLimitMiddleware(run_limit=10, exit_behavior='continue')`.
-- `config={'recursion_limit': 25}` na invocação, como proteção adicional.
+- `config={'recursion_limit': 50}` na invocação, como proteção adicional: cada volta do agente percorre cerca de 5 nós do grafo (modelo, tools e middlewares), então o limite precisa ser maior que 8 × 5 para que o `ModelCallLimitMiddleware` seja o limite efetivo. `GraphRecursionError` é tratado como saída inválida.
 - `reasoning_effort='low'` e `max_completion_tokens=AI_MAX_COMPLETION_TOKENS`.
 - Tools com top-N e campos mínimos; uso de tokens gravado em cada análise (`input_tokens`/`output_tokens`) para acompanhamento.
 

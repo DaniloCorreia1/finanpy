@@ -60,7 +60,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'categories.apps.CategoriesConfig',
     'transactions.apps.TransactionsConfig',
-    'ai',
+    'ai.apps.AiConfig',
 ]
 
 MIDDLEWARE = [
@@ -178,3 +178,50 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+
+# Logging
+# https://docs.djangoproject.com/en/6.1/topics/logging/
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'simple': {
+            'format': '{asctime} {levelname} {name} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'loggers': {
+        'ai': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+}
+
+
+# Financial AI agent (PRD section 14.12)
+
+OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '').strip()
+
+AI_MODEL_NAME = os.environ.get('AI_MODEL_NAME', 'gpt-5-mini')
+
+AI_REQUEST_TIMEOUT = int(os.environ.get('AI_REQUEST_TIMEOUT', '60'))
+
+AI_MAX_COMPLETION_TOKENS = int(
+    os.environ.get('AI_MAX_COMPLETION_TOKENS', '4000')
+)
+
+AI_MIN_TRANSACTIONS = int(os.environ.get('AI_MIN_TRANSACTIONS', '5'))
+
+AI_MANUAL_COOLDOWN_MINUTES = int(
+    os.environ.get('AI_MANUAL_COOLDOWN_MINUTES', '60')
+)

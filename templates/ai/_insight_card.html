@@ -1,0 +1,84 @@
+{% comment %}
+  Card de análise financeira do dashboard (PRD, seção 14.10).
+  Uso: {% include 'ai/_insight_card.html' %}
+  Contexto: latest_insight (None ou FinancialInsight com status, summary, insights, tips,
+  period_start, period_end, created_at) e ai_enabled (bool). Os botões de geração
+  só aparecem quando ai_enabled é verdadeiro.
+{% endcomment %}
+<section class="card" aria-labelledby="insight-title">
+  <h2 id="insight-title" class="text-lg font-semibold text-slate-100">Análise financeira</h2>
+
+  {% if not latest_insight %}
+    {% include 'components/_empty_state.html' with message='Você ainda não tem uma análise financeira. Gere a primeira para receber insights sobre seus gastos.' bare=True %}
+    {% if ai_enabled %}
+      <form method="post" action="{% url 'ai:generate' %}" class="pb-6 text-center" data-ai-generate>
+        {% csrf_token %}
+        <button type="submit" class="btn-primary w-full sm:w-auto">Gerar análise</button>
+      </form>
+    {% endif %}
+
+  {% elif latest_insight.status == 'insufficient_data' %}
+    <p class="mt-4 break-words text-sm text-slate-300 md:text-base">{{ latest_insight.summary }}</p>
+    <div class="mt-6">
+      <a href="{% url 'transactions:create' %}" class="btn-primary w-full sm:w-auto">Nova transação</a>
+    </div>
+
+  {% else %}
+    <p class="mt-4 break-words text-sm text-slate-300 md:text-base">{{ latest_insight.summary }}</p>
+
+    <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <div class="min-w-0">
+        <h3 id="insight-insights-title" class="text-base font-semibold text-slate-100">Insights</h3>
+        <ul class="mt-3 divide-y divide-slate-800" aria-labelledby="insight-insights-title">
+          {% for item in latest_insight.insights %}
+            <li class="py-3">
+              <p class="break-words font-medium text-slate-100">{{ item.title }}</p>
+              <p class="mt-1 break-words text-sm text-slate-400">{{ item.description }}</p>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="min-w-0">
+        <h3 id="insight-tips-title" class="text-base font-semibold text-slate-100">Dicas</h3>
+        <ul class="mt-3 divide-y divide-slate-800" aria-labelledby="insight-tips-title">
+          {% for item in latest_insight.tips %}
+            <li class="py-3">
+              <p class="break-words font-medium text-slate-100">{{ item.title }}</p>
+              <p class="mt-1 break-words text-sm text-slate-400">{{ item.description }}</p>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    <footer class="mt-6 flex flex-col gap-4 border-t border-slate-800 pt-4 sm:flex-row sm:items-end sm:justify-between">
+      <div class="min-w-0 space-y-1">
+        <p class="text-xs tabular-nums text-slate-400">Gerada em {{ latest_insight.created_at|date:'d/m/Y' }} às {{ latest_insight.created_at|date:'H:i' }} · Período de {{ latest_insight.period_start|date:'d/m/Y' }} a {{ latest_insight.period_end|date:'d/m/Y' }}</p>
+        <p class="text-xs text-slate-500">Análise gerada por IA com base nos seus lançamentos. Não constitui recomendação de investimento.</p>
+      </div>
+      {% if ai_enabled %}
+        <form method="post" action="{% url 'ai:generate' %}" class="shrink-0" data-ai-generate>
+          {% csrf_token %}
+          <button type="submit" class="btn-secondary btn-sm w-full whitespace-nowrap sm:w-auto">Gerar nova análise</button>
+        </form>
+      {% endif %}
+    </footer>
+  {% endif %}
+
+  {% if ai_enabled and latest_insight.status != 'insufficient_data' %}
+    <script>
+      document.querySelectorAll('form[data-ai-generate]').forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          var button = form.querySelector('button[type=submit]');
+          if (button.disabled) {
+            event.preventDefault();
+            return;
+          }
+          button.disabled = true;
+          button.setAttribute('aria-busy', 'true');
+          button.textContent = 'Gerando análise...';
+        });
+      });
+    </script>
+  {% endif %}
+</section>

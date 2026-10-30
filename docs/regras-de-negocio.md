@@ -54,6 +54,20 @@ Resumo dos requisitos funcionais (RF) do PRD.
 - Últimas 5 transações, com link "Ver todas".
 - Atalhos: Nova transação, Nova conta e Nova categoria.
 - Usuário sem dados vê valores zerados e empty states com os primeiros passos.
+- Card **Análise financeira** (logo abaixo dos stat cards) com a análise de IA mais recente do usuário; o dashboard nunca chama a IA.
+
+## Análise financeira com IA
+
+Especificação completa na seção 14 do PRD.
+
+- A app `ai` gera, para cada usuário, uma análise com resumo, de 2 a 5 insights e de 2 a 5 dicas, em português e com valores em reais, usando **somente os dados do próprio usuário** (RF-39, RF-40).
+- Período analisado: do 1º dia do mês de dois meses atrás até hoje, no fuso `America/Sao_Paulo` (ex.: em 29/10/2026, de 01/08/2026 a 29/10/2026).
+- Com menos de `AI_MIN_TRANSACTIONS` (padrão 5) transações no período, é gravado um registro de **dados insuficientes** sem chamar a IA; se o último registro do usuário já for de dados insuficientes, nada é gravado.
+- Toda análise é gravada em `FinancialInsight` (histórico; nada é sobrescrito). Falhas (chave ausente, timeout, rate limit, erro da API, saída inválida) não gravam registro e são registradas no logger `ai` sem dados financeiros, e-mails ou a chave.
+- Gatilhos: o command `python manage.py generate_financial_insights [--user <e-mail>]` (usuários ativos, um por vez, com resumo final) e o botão **Gerar nova análise** do dashboard (POST, intervalo mínimo de `AI_MANUAL_COOLDOWN_MINUTES`, padrão 60, por usuário, contando também as tentativas com falha).
+- O botão só aparece quando `OPENAI_API_KEY` está configurada.
+- O LLM recebe apenas agregados, nomes de categorias, tipos de conta, datas e valores; nunca nome, e-mail, telefone, data de nascimento, descrições de transações ou nomes de contas e bancos. As tools são somente leitura e o `user_id` vem do contexto de execução, nunca do modelo.
+- O card exibe o aviso fixo: "Análise gerada por IA com base nos seus lançamentos. Não constitui recomendação de investimento."
 
 ## Regras gerais
 
@@ -78,6 +92,12 @@ Resumo dos requisitos funcionais (RF) do PRD.
 | Transação criada / atualizada / excluída | Transação registrada com sucesso. / Transação atualizada com sucesso. / Transação excluída com sucesso. |
 | Categoria de tipo diferente | A categoria deve ser do mesmo tipo da transação. |
 | Valor inválido | O valor deve ser maior que zero. |
+| Análise gerada (success) | Análise gerada com sucesso. |
+| Dados insuficientes para a análise (warning) | Ainda não há dados suficientes para gerar uma análise. Registre ao menos 5 transações nos últimos 3 meses. (o número vem de `AI_MIN_TRANSACTIONS`) |
+| Pedido de análise dentro do intervalo de espera (warning) | Você gerou uma análise recentemente. Aguarde alguns minutos para gerar outra. |
+| Falha da IA ou chave ausente (error) | Não foi possível gerar a análise agora. Tente novamente mais tarde. |
+| Resumo padrão de dados insuficientes (gravado na análise) | Ainda não há lançamentos suficientes no período para uma análise. Continue registrando suas entradas e saídas. |
+| Aviso fixo no card de análise | Análise gerada por IA com base nos seus lançamentos. Não constitui recomendação de investimento. |
 
 ## Fluxos de UX
 
